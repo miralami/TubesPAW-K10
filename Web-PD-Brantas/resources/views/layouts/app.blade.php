@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dashboard')</title>
 
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
@@ -39,6 +37,34 @@
         img {
             border-radius: 4px;
         }
+        .table-rounded {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .table-rounded thead tr:first-child th:first-child {
+        border-top-left-radius: 12px;
+    }
+    .table-rounded thead tr:first-child th:last-child {
+        border-top-right-radius: 12px;
+    }
+    .table-rounded tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 12px;
+    }
+    .table-rounded tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 12px;
+    }
+
+    .table-rounded th, .table-rounded td {
+        border: 1px solid #dee2e6; /* soft grey */
+        background-color: white; /* putih bersih */
+        padding: 12px 16px; /* ruang antar cell */
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa; /* abu muda pas hover */
+    }
     </style>
 
     @stack('styles')
@@ -46,7 +72,6 @@
 <body class="bg-light">
 
 <div class="d-flex">
-    <!-- Sidebar -->
     <div class="sidebar p-3 d-flex flex-column">
         <div class="text-center mb-4">
             <img src="LOGO_URL_KAMU" alt="PD Brantas" style="max-width: 80px;">
@@ -76,14 +101,11 @@
             </ul>
         </div>
     </div>
-
-    <!-- Main Content -->
     <div class="flex-grow-1 p-4">
         @yield('content')
     </div>
 </div>
 
-<!-- Bootstrap 5 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 @stack('scripts')
