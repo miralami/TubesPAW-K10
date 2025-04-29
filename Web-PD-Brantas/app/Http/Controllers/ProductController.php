@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Product;
 use Illuminate\Http\Request;
-
 class ProductController extends Controller
 {
     public function index()
@@ -12,7 +9,6 @@ class ProductController extends Controller
         $products = Product::all();
         return view('products.index', compact('products'));
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -22,12 +18,9 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'image' => 'nullable|url',
         ]);
-
         Product::create($request->all());
-
         return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
     }
-
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -37,15 +30,17 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'image' => 'nullable|url',
         ]);
-
         $product->update($request->all());
-
         return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui.');
     }
-
     public function destroy(Product $product)
     {
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');
     }
+    public function show($id)
+{
+    $product = Product::findOrFail($id);
+    return view('products.show', compact('product'));
+}
 }

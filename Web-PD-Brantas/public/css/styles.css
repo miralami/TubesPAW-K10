@@ -1,0 +1,26 @@
+:root {
+    --br-navy: #0d1a3f;  /* Your custom navy color */
+    --br-light: #f5f7fa; /* Light color for text */
+}
+
+/* Target the navbar container */
+#nav {
+    background-color: var(--br-navy) !important;
+    color: var(--br-light) !important;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Target navbar links */
+.navbar .nav-link {
+    color: var(--br-light) !important;
+}
+
+.navbar .nav-link:hover {
+    color: #ddd !important; /* Lighter color on hover */
+}
+
+.navbar .navbar-brand {
+    color: var(--br-light) !important;
+}

@@ -1,113 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard')</title>
-
+    <title>PD. Brantas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
-    <style>
-        :root {
-            --brantas-navy: #0d1a3f;
-            --brantas-light: #f5f7fa;
-        }
-        .sidebar {
-            background-color: var(--brantas-navy);
-            color: white;
-            height: 100vh;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-        }
-        .sidebar a:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 4px;
-        }
-        .uk-card {
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease;
-        }
-        .uk-card:hover {
-            transform: scale(1.02);
-        }
-        img {
-            border-radius: 4px;
-        }
-        .table-rounded {
-        border-collapse: separate;
-        border-spacing: 0;
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    .table-rounded thead tr:first-child th:first-child {
-        border-top-left-radius: 12px;
-    }
-    .table-rounded thead tr:first-child th:last-child {
-        border-top-right-radius: 12px;
-    }
-    .table-rounded tbody tr:last-child td:first-child {
-        border-bottom-left-radius: 12px;
-    }
-    .table-rounded tbody tr:last-child td:last-child {
-        border-bottom-right-radius: 12px;
-    }
-
-    .table-rounded th, .table-rounded td {
-        border: 1px solid #dee2e6; /* soft grey */
-        background-color: white; /* putih bersih */
-        padding: 12px 16px; /* ruang antar cell */
-    }
-    .table-hover tbody tr:hover {
-        background-color: #f8f9fa; /* abu muda pas hover */
-    }
-    </style>
-
-    @stack('styles')
 </head>
-<body class="bg-light">
-
-<div class="d-flex">
-    <div class="sidebar p-3 d-flex flex-column">
-        <div class="text-center mb-4">
-            <img src="LOGO_URL_KAMU" alt="PD Brantas" style="max-width: 80px;">
-            <h4 class="mt-2">PD Brantas</h4>
-        </div>
-
-        <ul class="nav flex-column mb-auto">
-            <li class="nav-item mb-2">
-                <div class="text-uppercase fw-bold">Manajemen</div>
-            </li>
-            <li class="nav-item mb-2">
-                <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="#"><i class="bi bi-house-door"></i> Dashboard</a>
-            </li>
-            <li class="nav-item mb-2">
-                <a class="nav-link {{ request()->is('products*') ? 'active' : '' }}" href="{{ route('products.index') }}"><i class="bi bi-grid"></i> Produk</a>
-            </li>
-            <li class="nav-item mb-2">
-                <a class="nav-link" href="#"><i class="bi bi-clock-history"></i> Transaksi</a>
-            </li>
-        </ul>
-
-        <div class="mt-auto">
-            <ul class="nav flex-column">
+<body>
+<nav id="nav" class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand text-light" href="/">PD. Brantas</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
+                    <a class="nav-link text-light" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{{ route('catalog.index') }}">Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{{ route('cart.view') }}">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#">Login (Coming Soon)</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="flex-grow-1 p-4">
-        @yield('content')
-    </div>
-</div>
+</nav>
+
+<!-- Content -->
+<main>
+    @yield('content')
+</main>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    &copy; {{ date('Y') }} PD. Brantas. All Rights Reserved.
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-@stack('scripts')
 </body>
 </html>
