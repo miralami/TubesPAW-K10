@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 @section('content')
     <div class="container py-5">
         <h2 class="text-center mb-5">Checkout</h2>
@@ -13,18 +13,9 @@
             </div>
             <div class="col-md-6">
                 <h3>Checkout Form</h3>
-
-                {{-- Form untuk submit semua transaksi --}}
-                <form action="{{ route('transactions.orderMultiple') }}" method="POST">
-                    @csrf
-                    @foreach(session('cart', []) as $productId => $item)
-                        <input type="hidden" name="products[{{ $productId }}][product_id]" value="{{ $productId }}">
-                        <input type="hidden" name="products[{{ $productId }}][quantity]" value="{{ $item['quantity'] }}">
-                    @endforeach
-                    <input type="hidden" name="status" value="pending">
-                    <button type="submit" class="btn btn-success">Pesan Sekarang</button>
+                <form action="#" method="POST">
+                    <button type="submit" class="btn btn-success">Complete Purchase</button>
                 </form>
-
             </div>
         </div>
     </div>

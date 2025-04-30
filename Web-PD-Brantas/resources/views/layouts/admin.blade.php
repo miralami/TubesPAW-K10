@@ -17,10 +17,6 @@
             <li class="nav-item">
                 <a href="{{ route('products.index') }}" class="nav-link text-white">Kelola Produk</a>
             </li>
-            <!-- Tambahkan link untuk Daftar Transaksi -->
-            <li class="nav-item">
-                <a href="{{ route('transactions.index') }}" class="nav-link text-white">Daftar Transaksi</a>
-            </li>
             <li class="nav-item">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
