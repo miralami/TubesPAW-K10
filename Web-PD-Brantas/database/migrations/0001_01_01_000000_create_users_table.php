@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('address')->nullable();           // Alamat
             $table->enum('gender', ['male', 'female'])->nullable(); // Gender
             $table->string('profile_picture')->nullable();   // Foto Profil
+            $table->enum('role', ['admin', 'user'])->default('admin'); // Role
 
             $table->rememberToken();
             $table->timestamps();
