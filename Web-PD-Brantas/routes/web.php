@@ -9,12 +9,47 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AccountController;
 
-// ✅ Login routes (untuk guest, pindah ke /login agar tidak bentrok dengan landing page)
+// Halaman utama redirect ke login
+Route::get('/', function () {
+    return redirect('/login');
+});
+
+// Auth - Registrasi & Login
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Dashboard
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Halaman profil pelanggan
+    Route::get('/profile', [AccountController::class, 'editProfile'])->name('profile.edit');
+    Route::post('/profile', [AccountController::class, 'updateProfile'])->name('profile.update');
+
+    // Admin - Kelola akun
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
+        Route::delete('/accounts/{id}', [AccountController::class, 'destroy'])->name('accounts.destroy');
+    });
+});
+
+Route::middleware(['admin'])->group(function () {
+    Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
+    Route::delete('/accounts/{id}', [AccountController::class, 'destroy'])->name('accounts.destroy');
+});
+
+
+
 Route::middleware(['guest'])->group(function () {
-    Route::get('/login-fake', function () {
-        return 'Halaman login sementara (dummy)';
-    })->name('login');
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
 });
 
 Route::get('/home', function () {

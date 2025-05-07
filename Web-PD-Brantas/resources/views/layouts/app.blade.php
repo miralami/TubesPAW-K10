@@ -27,7 +27,7 @@
                     <a class="nav-link text-light" href="{{ route('cart.view') }}">Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">Login (Coming Soon)</a>
+                    <a class="nav-link text-light" href="{{route('login')}}">Login (Coming Soon)</a>
                 </li>
             </ul>
         </div>
