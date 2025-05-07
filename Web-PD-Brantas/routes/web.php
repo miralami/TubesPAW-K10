@@ -68,8 +68,8 @@ Route::middleware('auth')->group(function () {
     // ADMIN ONLY
     // ===================
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // admin.dashboard
-        Route::get('/admin', [AdminController::class, 'admin']);
+        //Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // admin.dashboard
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard'); // admin.dashboard
         Route::get('/user', [AdminController::class, 'user']);
 
         // Resource management

@@ -9,16 +9,16 @@ class AdminController extends Controller
 {
     function index()
     {
-        return view('admin');
+        return view('admin.dashboard');
     }
 
     function admin()
     {
-        return view('admin');
+        return view('admin.dashboard');
     }
 
     function user()
     {
-        return view('admin');
+        return view('admin.dashboard');
     }
 }

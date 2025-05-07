@@ -29,7 +29,7 @@
                 @auth
                     @if (Auth::user()->role === 'admin')
                         <li class="nav-item">
-                            <a class="nav-link px-2 {{ request()->is('admin/dashboard') ? 'active fw-semibold' : '' }}" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                            <a class="nav-link px-2 {{ request()->is('admin/dashboard') ? 'active fw-semibold' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                     @endif
 

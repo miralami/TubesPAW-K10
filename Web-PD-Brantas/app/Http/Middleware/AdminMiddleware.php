@@ -1,3 +1,4 @@
+<?php
 namespace App\Http\Middleware;
 
 use Closure;
@@ -12,6 +13,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('/dashboard')->with('error', 'Kamu tidak punya akses ke halaman ini.');
+        return redirect('/')->with('error', 'Kamu tidak punya akses ke halaman ini.');
     }
 }
