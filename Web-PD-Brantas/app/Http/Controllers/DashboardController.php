@@ -8,10 +8,12 @@ class DashboardController extends Controller
     public function index() {
         $user = Auth::user();
 
-        if ($user->role === 'admin') {
-            return view('admin.dashboard', compact('user'));
+        // Cegah akses user biasa ke /dashboard
+        if ($user->role !== 'admin') {
+            return redirect()->route('landing.index');
         }
 
-        return view('landing', compact('user'));
+        return view('admin.dashboard', compact('user'));
     }
+
 }

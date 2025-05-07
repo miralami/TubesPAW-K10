@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
-    ProductController, SesiController, AdminController, LandingPageController,
+    ProductController, AdminController, LandingPageController,
     CatalogController, CartController, CheckoutController, TransactionController,
     AuthController, DashboardController, AccountController
 };
@@ -18,16 +18,16 @@ Route::middleware('guest')->group(function () {
 });
 
 // =======================
-// PUBLIC ROUTES
+// LANDING PAGE (Publik)
 // =======================
 Route::get('/', [LandingPageController::class, 'index'])->name('landing.index');
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show'); // detail produk publik
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // =======================
 // CART
 // =======================
-Route::prefix('cart')->group(function () {
+Route::middleware('auth')->prefix('cart')->group(function () {
     Route::post('/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::get('/', [CartController::class, 'viewCart'])->name('cart.view');
     Route::post('/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
@@ -45,8 +45,6 @@ Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::resource('transactions', TransactionController::class)->only([
     'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
 ]);
-
-// Tambahan transaksi khusus
 Route::post('/transactions/order/{product}', [TransactionController::class, 'order'])->name('transactions.order');
 Route::post('/transactions/order-multiple', [TransactionController::class, 'orderMultiple'])->name('transactions.orderMultiple');
 
@@ -54,21 +52,28 @@ Route::post('/transactions/order-multiple', [TransactionController::class, 'orde
 // AUTH USER ROUTES
 // =======================
 Route::middleware('auth')->group(function () {
+    // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // User profile
     Route::get('/profile', [AccountController::class, 'editProfile'])->name('profile.edit');
     Route::post('/profile', [AccountController::class, 'updateProfile'])->name('profile.update');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Redirect user biasa ke landing, bukan dashboard
+    Route::get('/dashboard', function () {
+        return redirect()->route('landing.index');
+    })->name('dashboard');
 
     // ===================
     // ADMIN ONLY
     // ===================
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // admin.dashboard
         Route::get('/admin', [AdminController::class, 'admin']);
         Route::get('/user', [AdminController::class, 'user']);
 
-        // Resource routes
-        Route::resource('products', ProductController::class);   // -> admin/products/*
-        Route::resource('accounts', AccountController::class)->except(['show']);
+        // Resource management
+        Route::resource('products', ProductController::class); // admin.products.*
+        Route::resource('accounts', AccountController::class)->except(['show']); // admin.accounts.*
     });
 });

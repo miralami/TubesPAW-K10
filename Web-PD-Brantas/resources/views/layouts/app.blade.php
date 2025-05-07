@@ -9,46 +9,41 @@
     @stack('styles')
 </head>
 <body>
-<nav id="nav" class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top" style="background-color: #121212; padding-top: 0.75rem; padding-bottom: 0.75rem;">
     <div class="container">
-        <a class="navbar-brand text-light" href="/">PD. Brantas</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand fw-bold fs-4" href="/">PD. Brantas</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-center" style="gap: 2rem;">
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="/">Home</a>
+                    <a class="nav-link px-2 {{ request()->is('catalog') ? 'active fw-semibold' : '' }}" href="{{ route('catalog.index') }}">Catalog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="{{ route('catalog.index') }}">Catalog</a>
+                    <a class="nav-link px-2 {{ request()->is('cart') ? 'active fw-semibold' : '' }}" href="{{ route('cart.view') }}">Cart</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="{{ route('cart.view') }}">Cart</a>
-                </li>
-                @if (Auth::check())
-                    {{-- Jika user sudah login --}}
-                    @if (Auth::user()->role == 'admin')
-                        {{-- Tampilkan link ke dashboard admin --}}
+
+                @auth
+                    @if (Auth::user()->role === 'admin')
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                            <a class="nav-link px-2 {{ request()->is('admin/dashboard') ? 'active fw-semibold' : '' }}" href="{{ route('admin.dashboard') }}">Dashboard</a>
                         </li>
                     @endif
 
-                    {{-- Tampilkan tombol logout untuk semua user yang sudah login --}}
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-link nav-link text-light">Logout</button>
+                            <button type="submit" class="btn btn-outline-light btn-sm px-3">Logout</button>
                         </form>
                     </li>
                 @else
-                    {{-- Jika belum login, tampilkan tombol login --}}
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('login') }}">Login</a>
+                        <a class="btn btn-outline-light btn-sm px-3" href="{{ route('login') }}">Login</a>
                     </li>
-                @endif
-
+                @endauth
             </ul>
         </div>
     </div>
@@ -65,6 +60,50 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+@if(session('success'))
+    <div id="snackbar" class="snackbar">
+        {{ session('success') }}
+    </div>
+
+    <script>
+        const snackbar = document.getElementById('snackbar');
+        if (snackbar) {
+            snackbar.classList.add('show');
+            setTimeout(() => {
+                snackbar.classList.remove('show');
+            }, 3000); // hilang setelah 3 detik
+        }
+    </script>
+
+    <style>
+        .snackbar {
+            visibility: hidden;
+            min-width: 260px;
+            max-width: 90%;
+            background-color: #ffffff;
+            color: #333;
+            text-align: center;
+            border-radius: 8px;
+            padding: 14px 20px;
+            position: fixed;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            z-index: 9999;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: opacity 0.3s ease, top 0.4s ease;
+        }
+
+        .snackbar.show {
+            visibility: visible;
+            opacity: 1;
+            top: 50px;
+        }
+    </style>
+@endif
+
 
 </body>
 </html>

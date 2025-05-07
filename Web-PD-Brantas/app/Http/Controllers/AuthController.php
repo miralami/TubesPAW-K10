@@ -32,19 +32,29 @@ class AuthController extends Controller
     public function showLoginForm() {
         return view('login');
     }
-
     public function login(Request $request) {
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('admin.dashboard');
+            $user = Auth::user();
+
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('landing.index'); // atau 'landing.index' kalau mau
+            }
         }
 
         return back()->withErrors(['email' => 'Email atau password salah']);
     }
 
-    public function logout() {
-        Auth::logout();
-        return redirect('/login');
-    }
+    public function logout(Request $request)
+{
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('landing.index')->with('success', 'Anda berhasil logout.');
+}
+
 }
