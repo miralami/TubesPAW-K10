@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +12,6 @@ class DashboardController extends Controller
             return view('admin.dashboard', compact('user'));
         }
 
-        return view('pelanggan.dashboard', compact('user'));
+        return view('landing', compact('user'));
     }
 }

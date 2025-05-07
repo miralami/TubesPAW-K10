@@ -7,7 +7,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('products.index', compact('products'));
+        return view('admin.products.index', compact('products'));
     }
     public function store(Request $request)
     {
@@ -19,7 +19,7 @@ class ProductController extends Controller
             'image' => 'nullable|url',
         ]);
         Product::create($request->all());
-        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan.');
     }
     public function update(Request $request, Product $product)
     {
@@ -31,12 +31,12 @@ class ProductController extends Controller
             'image' => 'nullable|url',
         ]);
         $product->update($request->all());
-        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui.');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui.');
     }
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus.');
     }
     public function show($id)
 {

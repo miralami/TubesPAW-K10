@@ -26,9 +26,29 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{{ route('cart.view') }}">Cart</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="{{route('login')}}">Login (Coming Soon)</a>
-                </li>
+                @if (Auth::check())
+                    {{-- Jika user sudah login --}}
+                    @if (Auth::user()->role == 'admin')
+                        {{-- Tampilkan link ke dashboard admin --}}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        </li>
+                    @endif
+
+                    {{-- Tampilkan tombol logout untuk semua user yang sudah login --}}
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-link nav-link text-light">Logout</button>
+                        </form>
+                    </li>
+                @else
+                    {{-- Jika belum login, tampilkan tombol login --}}
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('login') }}">Login</a>
+                    </li>
+                @endif
+
             </ul>
         </div>
     </div>
