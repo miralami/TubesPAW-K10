@@ -32,26 +32,39 @@
     <div class="row">
         <!-- Sidebar -->
         <nav class="col-md-2 d-none d-md-block sidebar p-0">
-            <div class="position-sticky pt-3">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('admin/products*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">
-                            Products
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('admin/transactions*') ? 'active' : '' }}" href="{{ route('admin.transactions.index') }}">
-                            Transaksi
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <div class="d-flex flex-column h-100">
+        <div class="pt-3 px-2">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/products*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">
+                        Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/transactions*') ? 'active' : '' }}" href="{{ route('admin.transactions.index') }}">
+                        Transaksi
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Spacer -->
+        <div class="mt-auto p-3 border-top">
+            <a href="{{ route('landing.index') }}" class="btn btn-outline-light btn-sm w-100 mb-2">← Ke Landing Page</a>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-danger btn-sm w-100">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
 
         <!-- Content -->
         <main class="col-md-10 ms-sm-auto px-md-4 py-4">
