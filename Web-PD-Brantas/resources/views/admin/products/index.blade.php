@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Produk')
 
@@ -37,7 +37,7 @@
                 <td>
                     <button class="btn btn-info btn-sm text-white" data-bs-toggle="modal" data-bs-target="#editProductModal{{ $product->id }}">Edit</button>
 
-                    <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin mau hapus produk ini?')">
+                    <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin mau hapus produk ini?')">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm">Hapus</button>
@@ -48,7 +48,7 @@
             <div class="modal fade" id="editProductModal{{ $product->id }}" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('products.update', $product) }}" method="POST">
+            <form action="{{ route('admin.products.update', $product) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -98,7 +98,7 @@
 <!-- Modal Tambah Produk -->
 <div class="modal fade" id="createProductModal" tabindex="-1" aria-labelledby="createProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{ route('products.store') }}" method="POST" class="modal-content">
+        <form action="{{ route('admin.products.store') }}" method="POST" class="modal-content">
             @csrf
             <div class="modal-header">
                 <h5 class="modal-title" id="createProductModalLabel">Tambah Produk</h5>

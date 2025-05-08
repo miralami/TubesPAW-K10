@@ -40,15 +40,6 @@ Route::middleware('auth')->prefix('cart')->group(function () {
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
 // =======================
-// TRANSAKSI
-// =======================
-Route::resource('transactions', TransactionController::class)->only([
-    'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
-]);
-Route::post('/transactions/order/{product}', [TransactionController::class, 'order'])->name('transactions.order');
-Route::post('/transactions/order-multiple', [TransactionController::class, 'orderMultiple'])->name('transactions.orderMultiple');
-
-// =======================
 // AUTH USER ROUTES
 // =======================
 Route::middleware('auth')->group(function () {
@@ -69,10 +60,10 @@ Route::middleware('auth')->group(function () {
     // ===================
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         //Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // admin.dashboard
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard'); // admin.dashboard
-        Route::get('/user', [AdminController::class, 'user']);
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard'); // admin.dashboard
 
         // Resource management
+        Route::resource('transactions', TransactionController::class)->except(['show']); // admin.transactions.*
         Route::resource('products', ProductController::class); // admin.products.*
         Route::resource('accounts', AccountController::class)->except(['show']); // admin.accounts.*
     });

@@ -3,10 +3,11 @@
     --br-light: #f5f7fa; /* Light color for text */
 }
 
+
 /* Target the navbar container */
 #nav {
-    background-color: var(--br-navy) !important;
-    color: var(--br-light) !important;
+    background-color: var(--br-navy);
+    color: var(--br-light);
     padding: 10px;
     font-size: 16px;
     font-family: 'Arial', sans-serif;
@@ -27,9 +28,12 @@
     padding-bottom: 2px;
 }
 
-
 html, body {
     background-color: #121212; /* sama seperti navbar */
     margin: 0;
     padding: 0;
+}
+
+.txt-white {
+    color: #fff;
 }

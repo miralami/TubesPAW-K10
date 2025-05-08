@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
     <h2>Daftar Transaksi</h2>
-    <a href="{{ route('transactions.create') }}" class="btn btn-primary mb-3">Buat Transaksi Baru</a>
+    <a href="{{ route('admin.transactions.create') }}" class="btn btn-primary mb-3">Buat Transaksi Baru</a>
     @if(session('success'))
       <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -24,7 +24,7 @@
             <a href="{{ route('transactions.edit',$t->id) }}" class="btn btn-warning btn-sm">Edit</a>
             <form action="{{ route('transactions.destroy',$t->id) }}" method="POST" style="display:inline">
               @csrf @method('DELETE')
-              <button type="submit" class="btn btn-danger btn-sm" 
+              <button type="submit" class="btn btn-danger btn-sm"
                       onclick="return confirm('Yakin hapus?')">Hapus</button>
             </form>
           </td>

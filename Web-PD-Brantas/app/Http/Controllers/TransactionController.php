@@ -13,14 +13,14 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::with('product')->get();
-        return view('transactions.index', compact('transactions'));
+        return view('admin.transactions.index', compact('transactions'));
     }
 
     // 2. Form buat transaksi manual
     public function create()
     {
         $products = Product::all();
-        return view('transactions.create', compact('products'));
+        return view('admin.transactions.create', compact('products'));
     }
 
     // 3. Simpan transaksi baru (manual)
@@ -38,21 +38,21 @@ class TransactionController extends Controller
 
         Transaction::create($data);
 
-        return redirect()->route('transactions.index')
+        return redirect()->route('admin.transactions.index')
                          ->with('success', 'Transaksi berhasil dibuat.');
     }
 
     // 4. Detail transaksi
     public function show(Transaction $transaction)
     {
-        return view('transactions.show', compact('transaction'));
+        return view('admin.transactions.show', compact('transaction'));
     }
 
     // 5. Form edit transaksi
     public function edit(Transaction $transaction)
     {
         $products = Product::all();
-        return view('transactions.edit', compact('transaction','products'));
+        return view('admin.transactions.edit', compact('transaction','products'));
     }
 
     // 6. Update transaksi yang sudah ada
@@ -69,7 +69,7 @@ class TransactionController extends Controller
 
         $transaction->update($data);
 
-        return redirect()->route('transactions.index')
+        return redirect()->route('admin.transactions.index')
                          ->with('success', 'Transaksi berhasil diperbarui.');
     }
 
@@ -77,7 +77,7 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
-        return redirect()->route('transactions.index')
+        return redirect()->route('admin.transactions.index')
                          ->with('success', 'Transaksi berhasil dihapus.');
     }
 
@@ -106,7 +106,7 @@ class TransactionController extends Controller
         // Kosongkan cart setelah order
         session()->forget('cart');
 
-        return redirect()->route('transactions.index')
+        return redirect()->route('admin.transactions.index')
                          ->with('success', 'Semua transaksi berhasil diproses.');
     }
 }

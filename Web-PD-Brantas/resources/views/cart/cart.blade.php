@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container py-5">
-    <h2 class="text-center mb-5">Your Cart</h2>
+    <h2 class="text-center mb-5 txt-white">Your Cart</h2>
     @if(session('cart') && count(session('cart')) > 0)
         <div class="row">
             @foreach(session('cart') as $id => $item)
@@ -30,7 +30,7 @@
             <a href="{{ route('checkout') }}" class="btn btn-success">Proceed to Checkout</a>
         </div>
     @else
-        <p class="text-center">Your cart is empty.</p>
+        <p class="text-center txt-white">Your cart is empty.</p>
     @endif
 </div>
 @endsection
