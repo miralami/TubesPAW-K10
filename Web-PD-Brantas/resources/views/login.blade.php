@@ -1,49 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <title>Login</title>
-</head>
-<body>
-    <div class="container py-5">
-        <div class="w-50 center border rounded px-3 py-3 mx-auto">
-            <h1>Login</h1>
+@extends('layouts.app')
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $item)
-                            <li>{{ $item }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+@section('title', 'Login')
 
-            <form action="" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" value="{{ old('email') }}" name="email" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control">
-                </div>
-                <div class="mb-3 d-grid">
-                    <button name="submit" type="submit" class="btn btn-primary">Login</button>
-                </div>
-            </form>
+@push('styles')
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+<style>
+    .auth-card{
+        max-width:420px;
+        width:100%;
+        backdrop-filter:blur(4px);
+        background:rgba(255,255,255,.9);
+    }
+</style>
+@endpush
 
-            <!-- Tombol Register -->
-            <div class="text-center">
-                <p>Belum punya akun?</p>
-                <a href="{{ route('register') }}" class="btn btn-outline-secondary">Register</a>
+@section('content')
+<div class="container d-flex align-items-center justify-content-center" style="min-height:80vh">
+    <div class="card shadow-lg auth-card p-4" data-aos="zoom-in">
+        <h3 class="text-center fw-bold mb-4">Sign In</h3>
+
+        {{-- flash success (mis. setelah register) --}}
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        {{-- error list --}}
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0 small">
+                    @foreach($errors->all() as $err)
+                        <li>{{ $err }}</li>
+                    @endforeach
+                </ul>
             </div>
+        @endif
+
+        <form action="{{ route('login') }}" method="POST" class="mb-3">
+            @csrf
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email"
+                       value="{{ old('email') }}"
+                       class="form-control @error('email') is-invalid @enderror" required autofocus>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" name="password"
+                       class="form-control @error('password') is-invalid @enderror" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Login
+            </button>
+        </form>
+
+        <div class="text-center small">
+            Belum punya akun?
+            <a href="{{ route('register') }}" class="fw-semibold">Register</a>
         </div>
     </div>
-</body>
-</html>
+</div>
+@endsection

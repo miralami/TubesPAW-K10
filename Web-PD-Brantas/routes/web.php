@@ -27,44 +27,62 @@ Route::get('/products/{id}', [ProductController::class, 'show'])->name('products
 // =======================
 // CART
 // =======================
-Route::middleware('auth')->prefix('cart')->group(function () {
-    Route::post('/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
-    Route::get('/', [CartController::class, 'viewCart'])->name('cart.view');
-    Route::post('/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
-    Route::post('/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::middleware('auth')->prefix('cart')->name('cart.')->group(function () {
+    Route::get('/', [CartController::class, 'viewCart'])->name('view');
+    Route::post('/add/{productId}', [CartController::class, 'addToCart'])->name('add');
+    Route::put('/', [CartController::class, 'bulkUpdate'])->name('update'); // ⬅️ bulk update semua qty
+    Route::delete('/{id}', [CartController::class, 'removeFromCart'])->name('remove'); // ⬅️ ubah ke DELETE
 });
+
 
 // =======================
 // CHECKOUT
 // =======================
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
-// =======================
-// AUTH USER ROUTES
-// =======================
+/*
+|--------------------------------------------------------------------------
+| PUBLIC (guest) ROUTES
+|--------------------------------------------------------------------------
+*/
+Route::get('/',            [LandingPageController::class, 'index'])->name('landing.index');
+Route::get('/catalog',     [CatalogController::class,  'index'])->name('catalog.index');
+
+/*
+|--------------------------------------------------------------------------
+| AUTHENTICATED USER ROUTES
+|--------------------------------------------------------------------------
+*/
 Route::middleware('auth')->group(function () {
-    // Logout
+
+    /* -------- Logout ---------- */
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // User profile
-    Route::get('/profile', [AccountController::class, 'editProfile'])->name('profile.edit');
-    Route::post('/profile', [AccountController::class, 'updateProfile'])->name('profile.update');
+    /* -------- Profil Pelanggan ---------- */
+    Route::controller(AccountController::class)->group(function () {
+        Route::get ('/profile', 'editProfile'  )->name('profile.edit');
+        Route::put('/profile', 'updateProfile')->name('profile.update');   // pakai PUT agar REST-ful
+    });
 
-    // Redirect user biasa ke landing, bukan dashboard
-    Route::get('/dashboard', function () {
-        return redirect()->route('landing.index');
-    })->name('dashboard');
+    /* -------- Redirect user biasa dari /dashboard ke landing ---------- */
+    Route::get('/dashboard', fn () => redirect()->route('landing.index'))
+         ->name('dashboard');
 
-    // ===================
-    // ADMIN ONLY
-    // ===================
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN-ONLY ROUTES (prefix: admin, name: admin.*)
+    |--------------------------------------------------------------------------
+    */
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-        //Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // admin.dashboard
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard'); // admin.dashboard
 
-        // Resource management
-        Route::resource('transactions', TransactionController::class)->except(['show']); // admin.transactions.*
-        Route::resource('products', ProductController::class); // admin.products.*
-        Route::resource('accounts', AccountController::class)->except(['show']); // admin.accounts.*
+        Route::get('/dashboard', [AdminController::class, 'index'])
+             ->name('dashboard');                                // admin.dashboard
+
+        /* Resource management */
+        Route::resource('products',     ProductController::class);          // admin.products.*
+        Route::resource('transactions', TransactionController::class)
+             ->except(['show']);                                            // admin.transactions.*
+        Route::resource('accounts',     AccountController::class)
+             ->except(['show']);                                            // admin.accounts.*
     });
 });

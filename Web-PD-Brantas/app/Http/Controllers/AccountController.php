@@ -2,64 +2,79 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AccountController extends Controller
 {
-    // Admin melihat semua akun
+    /* ========== ADMIN SECTION ========== */
+
+    // Daftar semua akun non-admin
     public function index()
     {
-        $users = User::where('role', '!=', 'admin')->get();
+        $users = User::where('role', '!=', 'admin')->latest()->paginate(15);
         return view('admin.accounts.index', compact('users'));
     }
 
-    // Admin menghapus akun
+    // Hapus akun
     public function destroy($id)
     {
         $user = User::findOrFail($id);
 
-        // Jika user punya foto, hapus dari storage
+        // hapus foto lama jika ada
         if ($user->photo && Storage::disk('public')->exists($user->photo)) {
             Storage::disk('public')->delete($user->photo);
         }
 
         $user->delete();
-        return redirect()->route('accounts.index')->with('success', 'Akun berhasil dihapus.');
+        return redirect()->route('admin.accounts.index')
+                         ->with('success', 'Akun berhasil dihapus.');
     }
 
-    // Pelanggan edit profil
+    /* ========== CUSTOMER SECTION ========== */
+
+    // Form edit profil
     public function editProfile()
     {
-        $user = Auth::user();
-        return view('pelanggan.profile.edit', compact('user'));
+        return view('profile.edit', [
+            'user' => Auth::user()
+        ]);
     }
 
-    // Pelanggan update profil
+    // Simpan perubahan profil
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|email|max:255|unique:users,email,' . $user->id,
+            'photo'     => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'password'  => 'nullable|confirmed|min:6',
         ]);
 
-        $user->name = $request->name;
+        // basic field
+        $user->name  = $request->name;
+        $user->email = $request->email;
 
+        // ganti password bila diisi
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // handle foto baru
         if ($request->hasFile('photo')) {
-            // Hapus foto lama jika ada
+            // hapus foto lama
             if ($user->photo && Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);
             }
-
-            $photoPath = $request->file('photo')->store('photos', 'public');
-            $user->photo = $photoPath;
+            $user->photo = $request->file('photo')->store('photos', 'public');
         }
 
-        $user->save(); // Pastikan $user adalah instance model User
+        $user->save();
 
         return back()->with('success', 'Profil berhasil diperbarui.');
     }

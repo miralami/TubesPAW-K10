@@ -29,11 +29,20 @@
 }
 
 html, body {
-    background-color: #121212; /* sama seperti navbar */
     margin: 0;
     padding: 0;
 }
 
 .txt-white {
     color: #fff;
+}
+
+.card-profile{
+    border:1px solid #dee2e6;      /* abu muda */
+    box-shadow:0 0.5rem 1rem rgba(0,0,0,.08);
+    background:#fff;
+}
+
+.font-size-40{
+    font-size:40px;
 }

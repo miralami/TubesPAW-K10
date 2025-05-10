@@ -32,7 +32,7 @@
                 <td>{{ $product->name }}</td>
                 <td>Rp{{ number_format($product->price, 0, ',', '.') }}</td>
                 <td>{{ $product->stock }}</td>
-                <td><img src="{{ $product->image }}" alt="" width="80"></td>
+                <td><img src="{{ asset('storage/' . $product->image) }}" alt="" width="80"></td>
                 <td>{{ $product->description }}</td>
                 <td>
                     <button class="btn btn-info btn-sm text-white" data-bs-toggle="modal" data-bs-target="#editProductModal{{ $product->id }}">Edit</button>
@@ -48,7 +48,8 @@
             <div class="modal fade" id="editProductModal{{ $product->id }}" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('admin.products.update', $product) }}" method="POST">
+        <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data">
+
                 @csrf
                 @method('PUT')
 
@@ -71,8 +72,8 @@
                         <input type="number" name="stock" class="form-control" value="{{ $product->stock }}" required>
                     </div>
                     <div class="mb-3">
-                        <label>Link Gambar</label>
-                        <input type="text" name="image" class="form-control" value="{{ $product->image }}">
+                        <label for="image" class="form-label">Foto Produk</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
                     </div>
                     <div class="mb-3">
                         <label>Deskripsi</label>
@@ -98,7 +99,7 @@
 <!-- Modal Tambah Produk -->
 <div class="modal fade" id="createProductModal" tabindex="-1" aria-labelledby="createProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{ route('admin.products.store') }}" method="POST" class="modal-content">
+    <form action="{{ route('admin.products.store') }}" method="POST" class="modal-content" enctype="multipart/form-data">
             @csrf
             <div class="modal-header">
                 <h5 class="modal-title" id="createProductModalLabel">Tambah Produk</h5>
@@ -118,8 +119,12 @@
                     <input type="number" name="stock" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label>Link Gambar</label>
-                    <input type="text" name="image" class="form-control">
+                    <label for="image" class="form-label">Foto Produk</label>
+                    <input type="file" name="image" class="form-control" accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <label>Kategori</label>
+                    <input type="text" name="category" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label>Deskripsi</label>

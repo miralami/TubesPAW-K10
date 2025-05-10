@@ -11,7 +11,7 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="img-fluid">
+                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-fluid">
             </div>
             <div class="col-md-6">
                 <h2>{{ $product->name }}</h2>

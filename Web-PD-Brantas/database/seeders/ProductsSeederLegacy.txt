@@ -1,0 +1,205 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Product;
+use Illuminate\Support\Str;
+
+class ProductsSeederLegacy extends Seeder
+{
+    public function run(): void
+    {
+        $extras = [
+            [
+                'name'        => 'Botol Minum Tritan 1 L',
+                'description' => 'Botol tritan anti-bocor, BPA-free, cocok untuk olahraga & hiking.',
+                'price'       => 59000,
+                'stock'       => 80,
+                'category'    => 'Perlengkapan Outdoor',
+                'image'       => 'https://picsum.photos/seed/botol/400/400',
+                'sold'        => 12
+            ],
+            [
+                'name'        => 'Matras Lipat EVA 10 mm',
+                'description' => 'Matras foldable bahan EVA tebal 10 mm — nyaman & ringan.',
+                'price'       => 88000,
+                'stock'       => 40,
+                'category'    => 'Perlengkapan Camping',
+                'image'       => 'https://picsum.photos/seed/matras/400/400',
+                'sold'        => 5,
+            ],
+            [
+                'name'        => 'Lampu Meja LED Dimmable',
+                'description' => 'Lampu meja 3 tingkat brightness, neck fleksibel 360°. USB powered.',
+                'price'       => 110000,
+                'stock'       => 65,
+                'category'    => 'Perlengkapan Kantor',
+                'image'       => 'https://picsum.photos/seed/lampled/400/400',
+                'sold'        => 22
+            ],
+            [
+                'name'        => 'Organizer Kabel Velcro 50 pcs',
+                'description' => 'Strap velcro 15 cm untuk merapikan kabel & charger.',
+                'price'       => 34000,
+                'stock'       => 120,
+                'category'    => 'Perlengkapan Elektronik',
+                'image'       => 'https://picsum.photos/seed/velcro/400/400',
+                'sold'        => 33
+            ],
+            [
+                'name'        => 'Kunci Inggris 12″ Chrome-Vanadium',
+                'description' => 'Adjustable wrench 12 inci, material Cr-V tahan karat.',
+                'price'       => 97000,
+                'stock'       => 55,
+                'category'    => 'Perlengkapan Bengkel',
+                'image'       => 'https://picsum.photos/seed/wrench/400/400',
+                'sold'        => 10
+            ],
+            [
+                'name'        => 'Apron Dapur Waterproof',
+                'description' => 'Apron PVC coating anti minyak, ada saku depan.',
+                'price'       => 45000,
+                'stock'       => 70,
+                'category'    => 'Perlengkapan Rumah',
+                'image'       => 'https://picsum.photos/seed/apron/400/400',
+                'sold'        => 8
+            ],
+            [
+                'name'        => 'Thermometer Infrared Non-Contact',
+                'description' => 'Alat ukur suhu tubuh/paket, mode °C/°F, akurasi ±0.2 °C.',
+                'price'       => 160000,
+                'stock'       => 35,
+                'category'    => 'Perlengkapan Medis',
+                'image'       => 'https://picsum.photos/seed/thermo/400/400',
+                'sold'        => 4
+            ],
+            [
+                'name'        => 'Kursi Lipat Aluminium',
+                'description' => 'Kursi camping alum ringan, kapasitas 100 kg.',
+                'price'       => 125000,
+                'stock'       => 45,
+                'category'    => 'Perlengkapan Camping',
+                'image'       => 'https://picsum.photos/seed/kursi/400/400',
+                'sold'        => 9
+            ],
+            [
+                'name'        => 'Pelindung Siku & Lutut 4 pcs',
+                'description' => 'Set elbow-knee guard EVA untuk skateboard & sepeda.',
+                'price'       => 89000,
+                'stock'       => 50,
+                'category'    => 'Perlengkapan Olahraga',
+                'image'       => 'https://picsum.photos/seed/guard/400/400',
+                'sold'        => 6
+            ],
+            [
+                'name'        => 'Label Maker Mini Bluetooth',
+                'description' => 'Mesin cetak stiker label 12 mm, koneksi HP, baterai 1200 mAh.',
+                'price'       => 310000,
+                'stock'       => 25,
+                'category'    => 'Perlengkapan Kantor',
+                'image'       => 'https://picsum.photos/seed/label/400/400',
+                'sold'        => 3
+            ],
+            /* ====== POLISI (4) ====== */
+    [
+        'name'        => 'Topi Pet Polisi Hitam',
+        'description' => 'Topi pet resmi polisi bahan kain drill, emblem logam.',
+        'price'       => 95000,
+        'stock'       => 40,
+        'category'    => 'Polisi',
+        'image'       => 'https://picsum.photos/seed/topipolisi/400/400',
+        'sold'        => 0,
+    ],
+    [
+        'name'        => 'Sabuk Taktis Polisi',
+        'description' => 'Sabuk webbing hitam lebar 5 cm, quick-release buckle.',
+        'price'       => 68000,
+        'stock'       => 60,
+        'category'    => 'Polisi',
+        'image'       => 'https://picsum.photos/seed/sabukpolisi/400/400',
+        'sold'        => 0,
+    ],
+    [
+        'name'        => 'Pluit Lalin Chrome',
+        'description' => 'Peluit lalu-lintas bahan kuningan lapis chrome + tali.',
+        'price'       => 18000,
+        'stock'       => 120,
+        'category'    => 'Polisi',
+        'image'       => 'https://picsum.photos/seed/pluitpolisi/400/400',
+        'sold'        => 0,
+    ],
+    [
+        'name'        => 'Sarung Pistol Nylon (Polisi)',
+        'description' => 'Holster belt-loop ukuran medium, velcro pengaman.',
+        'price'       => 89000,
+        'stock'       => 25,
+        'category'    => 'Polisi',
+        'image'       => 'https://picsum.photos/seed/holsterpol/400/400',
+        'sold'        => 0,
+    ],
+
+    /* ====== TNI (3) ====== */
+    [
+        'name'        => 'Baret TNI Hijau',
+        'description' => 'Baret wol hijau TNI AD + emblem logam oval.',
+        'price'       => 85000,
+        'stock'       => 35,
+        'category'    => 'TNI',
+        'image'       => 'https://picsum.photos/seed/barettni/400/400',
+        'sold'        => 0,
+    ],
+    [
+        'name'        => 'Kaos Loreng TNI Quick-Dry',
+        'description' => 'Kaos combat print loreng, bahan polyester quick-dry.',
+        'price'       => 120000,
+        'stock'       => 50,
+        'category'    => 'TNI',
+        'image'       => 'https://picsum.photos/seed/kaostni/400/400',
+        'sold'        => 0,
+    ],
+    [
+        'name'        => 'Ransel TNI 45 L',
+        'description' => 'Ransel molle loreng 45 liter, rain-cover bawaan.',
+        'price'       => 340000,
+        'stock'       => 18,
+        'category'    => 'TNI',
+        'image'       => 'https://picsum.photos/seed/ranseltni/400/400',
+        'sold'        => 0,
+    ],
+
+    /* ====== AKSESORIS (3) ====== */
+    [
+        'name'        => 'Jas Hujan Ponco Camouflage',
+        'description' => 'Ponco waterproof motif camo, bisa jadi fly-sheet.',
+        'price'       => 110000,
+        'stock'       => 70,
+        'category'    => 'Aksesoris',
+        'image'       => 'https://picsum.photos/seed/ponco/400/400',
+        'sold'        => 0,
+    ],
+    [
+        'name'        => 'Gantungan Kunci Lencana',
+        'description' => 'Keychain karet lembut bentuk lencana garuda, 5 cm.',
+        'price'       => 15000,
+        'stock'       => 200,
+        'category'    => 'Aksesoris',
+        'image'       => 'https://picsum.photos/seed/keygaruda/400/400',
+        'sold'        => 0,
+    ],
+    [
+        'name'        => 'Patch Velcro “Security”',
+        'description' => 'Patch bordir 10x3 cm + velcro hook & loop.',
+        'price'       => 11000,
+        'stock'       => 150,
+        'category'    => 'Aksesoris',
+        'image'       => 'https://picsum.photos/seed/patchsecurity/400/400',
+        'sold'        => 0,
+    ],
+        ];
+
+        foreach ($extras as $item) {
+            Product::create($item);
+        }
+    }
+}
