@@ -63,6 +63,54 @@
             <a href="{{ route('catalog.index') }}" class="btn btn-outline-secondary mt-4">
                 ← Back to Catalog
             </a>
+
+            <!-- Review Section -->
+        <div class="reviews mt-5">
+            <h3>Reviews</h3>
+            @if($reviews->isEmpty())
+                <p>No reviews yet.</p>
+            @else
+                @foreach($reviews as $review)
+                    <div class="review mb-3 p-3 border rounded">
+                        <strong>{{ $review->user->name }}</strong>
+                        <div class="rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $review->rating)
+                                    <span class="text-warning">★</span> <!-- Bintang yang diisi -->
+                                @else
+                                    <span class="text-muted">★</span> <!-- Bintang yang kosong -->
+                                @endif
+                            @endfor
+                        </div>
+                        <p>{{ $review->comment }}</p>
+                    </div>
+                @endforeach
+            @endif
+
+            <!-- Review Form -->
+            @auth
+                <form action="{{ route('reviews.store', $product->id) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Rating</label>
+                        <select name="rating" id="rating" class="form-select" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            @else
+                <p>Please <a href="{{ route('login') }}">log in</a> to leave a review.</p>
+            @endauth
+        </div>
         </div>
     </div>
 </div>

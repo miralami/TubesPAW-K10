@@ -71,15 +71,33 @@ class ProductController extends Controller
     }
 
     public function show($id)
-    {
-        $product = Product::findOrFail($id);
+{
+    $product = Product::findOrFail($id);
+    $reviews = $product->reviews; // Mengambil review terkait produk
+    
+    return view('products.show', compact('product', 'reviews'));
+}
 
-        // 1) Jika via route admin (untuk preview admin)
-        if (request()->routeIs('admin.*')) {
-            return view('admin.products.show', compact('product'));
-        }
+    // Menyimpan review baru untuk produk
+    public function storeReview(Request $request, Product $product)
+{
+    $request->validate([
+        'rating' => 'required|integer|min:1|max:5',
+        'comment' => 'nullable|string|max:1000',
+    ]);
 
-        // 2) Jika bukan via prefix admin, tampilkan view publik
-        return view('products.show', compact('product'));
-    }
+    // Membuat review baru
+    $review = new Review([
+        'user_id' => Auth::id(),  // Mengambil ID pengguna yang sedang login
+        'product_id' => $product->id,
+        'rating' => $request->rating,
+        'comment' => $request->comment,
+    ]);
+
+    // Simpan review ke database
+    $review->save();
+
+    // Redirect ke halaman produk dengan pesan sukses
+    return redirect()->route('products.show', $product->id)->with('success', 'Review telah berhasil ditambahkan.');
+}
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     ProductController, AdminController, LandingPageController,
     CatalogController, CartController, CheckoutController, TransactionController,
-    AuthController, DashboardController, AccountController
+    AuthController, DashboardController, AccountController, ReviewController
 };
 
 // =======================
@@ -86,3 +86,12 @@ Route::middleware('auth')->group(function () {
              ->except(['show']);                                            // admin.accounts.*
     });
 });
+
+
+// =======================
+
+// REVIEW - AUTH ONLY
+
+// =======================
+
+Route::middleware('auth')->post('/product/{product}/review', [ReviewController::class, 'store'])->name('reviews.store');
