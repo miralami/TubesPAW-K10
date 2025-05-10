@@ -1,35 +1,98 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container mt-4">
-        <h1 class="mb-3">Selamat Datang, Admin!</h1>
-        <p class="lead">Ini adalah area admin untuk mengelola produk, pengguna, dan data penting lainnya.</p>
+<div class="container-fluid py-4">
 
-        <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Total Produk</h5>
-                    <p class="card-text">{{ $productCount }} produk</p>
+    {{-- Greeting --}}
+    <h2 class="fw-bold mb-1">Selamat Datang, Admin!</h2>
+    <p class="text-muted mb-4">Kelola produk, pengguna & pesanan melalui panel di bawah.</p>
+
+    {{-- Stat cards --}}
+    <div class="row g-4 mb-4">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="badge bg-primary p-3"><i class="bi bi-box-seam fs-5"></i></span>
+                    <div>
+                        <h6 class="mb-0">Total Produk</h6>
+                        <h4 class="fw-bold mb-0">{{ $productCount }}</h4>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Pengguna Terdaftar</h5>
-                    <p class="card-text">{{ $userCount }} pengguna</p>
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="badge bg-success p-3"><i class="bi bi-people fs-5"></i></span>
+                    <div>
+                        <h6 class="mb-0">Pengguna Terdaftar</h6>
+                        <h4 class="fw-bold mb-0">{{ $userCount }}</h4>
+                    </div>
                 </div>
             </div>
         </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Pesanan Hari Ini</h5>
-                        <p class="card-text">8 pesanan</p>
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="badge bg-warning p-3"><i class="bi bi-receipt fs-5"></i></span>
+                    <div>
+                        <h6 class="mb-0">Pesanan Hari Ini</h6>
+                        {{-- <h4 class="fw-bold mb-0">{{ $todayOrders }}</h4> --}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- Weather widget (lokasi user) sudah ditampilkan di atas otomatis --}}
+
+    {{-- Quick-links  --}}
+    <div class="row g-3">
+        <div class="col-md-6 col-lg-3">
+            <a href="{{ route('admin.products.index') }}" class="text-decoration-none">
+                <div class="card h-100 text-center border-0 shadow-sm">
+                    <div class="card-body py-4">
+                        <i class="bi bi-plus-lg display-6 text-primary mb-3"></i>
+                        <h6 class="mb-0 fw-semibold">Tambah Produk</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <a href="{{ route('admin.transactions.index') }}" class="text-decoration-none">
+                <div class="card h-100 text-center border-0 shadow-sm">
+                    <div class="card-body py-4">
+                        <i class="bi bi-clock-history display-6 text-success mb-3"></i>
+                        <h6 class="mb-0 fw-semibold">Riwayat Pesanan</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <a href="{{ route('admin.accounts.index') }}" class="text-decoration-none">
+                <div class="card h-100 text-center border-0 shadow-sm">
+                    <div class="card-body py-4">
+                        <i class="bi bi-person-check display-6 text-info mb-3"></i>
+                        <h6 class="mb-0 fw-semibold">Kelola Pengguna</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <a href="{{ route('help') }}" class="text-decoration-none">
+                <div class="card h-100 text-center border-0 shadow-sm">
+                    <div class="card-body py-4">
+                        <i class="bi bi-question-circle display-6 text-warning mb-3"></i>
+                        <h6 class="mb-0 fw-semibold">Pusat Bantuan</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 @endsection

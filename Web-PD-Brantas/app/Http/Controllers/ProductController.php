@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Review; // Import the Review model
+use Illuminate\Support\Facades\Auth; // Import Auth for user authentication
 
 class ProductController extends Controller
 {
@@ -74,7 +76,7 @@ class ProductController extends Controller
 {
     $product = Product::findOrFail($id);
     $reviews = $product->reviews; // Mengambil review terkait produk
-    
+
     return view('products.show', compact('product', 'reviews'));
 }
 

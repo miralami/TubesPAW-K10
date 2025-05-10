@@ -25,64 +25,59 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center" style="gap:2rem">
-                <li class="nav-item">
-                    <a class="nav-link px-2 {{ request()->is('catalog') ? 'active fw-semibold' : '' }}"
-                       href="{{ route('catalog.index') }}">Catalog</a>
-                </li>
+<ul class="navbar-nav ms-auto align-items-center" style="gap:2rem">
+    {{-- Catalog & Bantuan --}}
+    <div class="d-flex align-items-center gap-4">
+        <li class="nav-item">
+            <a class="nav-link px-2 {{ request()->is('catalog') ? 'active fw-semibold' : '' }}"
+               href="{{ route('catalog.index') }}">Catalog</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-2 {{ request()->is('bantuan') ? 'active fw-semibold' : '' }}"
+               href="{{ route('help') }}">Bantuan</a>
+        </li>
+    </div>
 
-                {{-- Cart --}}
-                <li class="nav-item">
-                    <a class="nav-link px-2 position-relative {{ request()->is('cart') ? 'active fw-semibold' : '' }}"
-                       href="{{ route('cart.view') }}">
-                        <i class="bi bi-cart3 fs-5"></i>
-                    </a>
-                </li>
+    {{-- Batas & Cart + Profil --}}
+    <div class="d-flex align-items-center gap-3 ps-4 border-start border-secondary-subtle">
+        {{-- Cart --}}
+        <li class="nav-item">
+            <a class="nav-link px-2 position-relative {{ request()->is('cart') ? 'active fw-semibold' : '' }}"
+               href="{{ route('cart.view') }}">
+                <i class="bi bi-cart3 fs-5"></i>
+            </a>
+        </li>
 
-                @auth
-                    {{-- Transaksi user
-                    @if(Auth::user()->role === 'user')
-                        <li class="nav-item">
-                            <a class="nav-link px-2 {{ request()->is('transactions*') ? 'active fw-semibold' : '' }}"
-                               href="{{ route('transactions.index') }}">Transaksi Saya</a>
-                        </li>
-                    @endif --}}
-
-                    {{-- Dropdown profil --}}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Str::limit(Auth::user()->name,12) }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            {{-- hanya admin --}}
-                            @if(Auth::user()->role === 'admin')
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                        Menu Admin
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                            @endif
-
-                            <li>
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">Profil</a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form action="{{ route('logout') }}" method="POST" class="px-3">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger w-100">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
+        {{-- Profil / Login --}}
+        @auth
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle px-2" href="#" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ Str::limit(Auth::user()->name,12) }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    @if(Auth::user()->role === 'admin')
+                        <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Menu Admin</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                    @endif
+                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profil</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST" class="px-3">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-danger w-100">Logout</button>
+                        </form>
                     </li>
-                @else
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm px-3" href="{{ route('login') }}">Login</a>
-                    </li>
-                @endauth
-            </ul>
+                </ul>
+            </li>
+        @else
+            <li class="nav-item">
+                <a class="btn btn-outline-light btn-sm px-3" href="{{ route('login') }}">Login</a>
+            </li>
+        @endauth
+    </div>
+</ul>
+
         </div>
     </div>
 </nav>

@@ -23,6 +23,7 @@ Route::middleware('guest')->group(function () {
 Route::get('/', [LandingPageController::class, 'index'])->name('landing.index');
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::view('/bantuan','bantuan')->name('help');
 
 // =======================
 // CART

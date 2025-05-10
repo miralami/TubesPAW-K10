@@ -83,7 +83,7 @@
                 </div>
 
                 <button class="btn btn-outline-primary mt-3">
-                    Update Cart
+                    Update Quantity
                 </button>
             </div>
 
