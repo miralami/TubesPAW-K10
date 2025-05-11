@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
     body{overflow-x:hidden}
 
@@ -91,6 +92,13 @@
                     <i class="bi bi-receipt"></i> Transaksi
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/akun*') ? 'active' : '' }}" href="{{ route('admin.akun.index') }}">
+                        <i class="bi bi-people"></i> Akun
+                    </a>
+                </li>                
+                
             </ul>
 
             {{-- Footer buttons --}}

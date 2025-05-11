@@ -12,11 +12,47 @@ class AccountController extends Controller
 {
     /* ========== ADMIN SECTION ========== */
 
-    // Daftar semua akun non-admin
-    public function index()
+    // Daftar semua akun non-admin, dengan fitur pencarian
+    public function index(Request $request)
     {
-        $users = User::where('role', '!=', 'admin')->latest()->paginate(15);
-        return view('admin.accounts.index', compact('users'));
+        $keyword = $request->katakunci;
+
+        $users = User::where('role', '!=', 'admin')
+            ->when($keyword, function ($query, $keyword) {
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%$keyword%")
+                      ->orWhere('email', 'like', "%$keyword%");
+                });
+            })
+            ->orderBy('name')
+            ->paginate(5)
+            ->withQueryString();
+
+        // Ganti path sesuai folder view kamu
+        return view('admin.akun.index', compact('users'));
+    }
+
+    // Form edit akun (admin)
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.akun.edit', compact('user'));
+    }
+
+    // Update akun (opsional)
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:20',
+        ]);
+
+        $user->update($request->only(['name', 'email', 'phone']));
+
+        return redirect()->route('akun.index')->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
     // Hapus akun
@@ -30,8 +66,8 @@ class AccountController extends Controller
         }
 
         $user->delete();
-        return redirect()->route('admin.accounts.index')
-                         ->with('success', 'Akun berhasil dihapus.');
+
+        return redirect()->route('akun.index')->with('success', 'Akun berhasil dihapus.');
     }
 
     /* ========== CUSTOMER SECTION ========== */
@@ -56,7 +92,6 @@ class AccountController extends Controller
             'password'  => 'nullable|confirmed|min:6',
         ]);
 
-        // basic field
         $user->name  = $request->name;
         $user->email = $request->email;
 
@@ -67,7 +102,6 @@ class AccountController extends Controller
 
         // handle foto baru
         if ($request->hasFile('photo')) {
-            // hapus foto lama
             if ($user->photo && Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);
             }
