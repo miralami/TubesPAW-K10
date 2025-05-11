@@ -94,7 +94,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('admin/akun*') ? 'active' : '' }}" href="{{ route('admin.akun.index') }}">
+                    <a class="nav-link {{ request()->is('admin/akun*') ? 'active' : '' }}" 
+                        href="{{ route('admin.akun.index') }}">
                         <i class="bi bi-people"></i> Akun
                     </a>
                 </li>                

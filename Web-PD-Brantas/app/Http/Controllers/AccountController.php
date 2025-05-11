@@ -28,7 +28,6 @@ class AccountController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        // Ganti path sesuai folder view kamu
         return view('admin.akun.index', compact('users'));
     }
 
@@ -52,7 +51,7 @@ class AccountController extends Controller
 
         $user->update($request->only(['name', 'email', 'phone']));
 
-        return redirect()->route('akun.index')->with('success', 'Data pengguna berhasil diperbarui.');
+        return redirect()->route('admin.akun.index')->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
     // Hapus akun
@@ -60,14 +59,13 @@ class AccountController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // hapus foto lama jika ada
         if ($user->photo && Storage::disk('public')->exists($user->photo)) {
             Storage::disk('public')->delete($user->photo);
         }
 
         $user->delete();
 
-        return redirect()->route('akun.index')->with('success', 'Akun berhasil dihapus.');
+        return redirect()->route('admin.akun.index')->with('success', 'Akun berhasil dihapus.');
     }
 
     /* ========== CUSTOMER SECTION ========== */
@@ -95,12 +93,10 @@ class AccountController extends Controller
         $user->name  = $request->name;
         $user->email = $request->email;
 
-        // ganti password bila diisi
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
 
-        // handle foto baru
         if ($request->hasFile('photo')) {
             if ($user->photo && Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);
