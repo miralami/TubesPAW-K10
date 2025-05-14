@@ -47,10 +47,10 @@
             <h1 class="display-5 fw-bold mb-3">Kami Siap Membantu</h1>
             <p class="lead mb-4">Temukan jawaban cepat atau hubungi tim kami.</p>
             <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <a href="mailto:support@pdbrantas.co.id" class="btn btn-light fw-semibold px-4">
+                <a href="mailto:afifnursena08@gmail.com" class="btn btn-light fw-semibold px-4">
                     Kirim Email
                 </a>
-                <a href="https://wa.me/6281234567890" target="_blank"
+                <a href="https://wa.me/6281533369512" target="_blank"
                    class="btn btn-outline-light text-white px-4">
                     WhatsApp
                 </a>
