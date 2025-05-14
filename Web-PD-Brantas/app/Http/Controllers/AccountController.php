@@ -14,22 +14,21 @@ class AccountController extends Controller
 
     // Daftar semua akun non-admin, dengan fitur pencarian
     public function index(Request $request)
-    {
-        $keyword = $request->katakunci;
+{
+    $keyword = $request->katakunci;
 
-        $users = User::where('role', '!=', 'admin')
-            ->when($keyword, function ($query, $keyword) {
-                $query->where(function ($q) use ($keyword) {
-                    $q->where('name', 'like', "%$keyword%")
-                      ->orWhere('email', 'like', "%$keyword%");
-                });
-            })
-            ->orderBy('name')
-            ->paginate(5)
-            ->withQueryString();
+    $users = User::when($keyword, function ($query, $keyword) {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('name', 'like', "%{$keyword}%")
+                  ->orWhere('email', 'like', "%{$keyword}%");
+            });
+        })
+        ->orderBy('name')
+        ->paginate(5)
+        ->withQueryString();
 
-        return view('admin.akun.index', compact('users'));
-    }
+    return view('admin.akun.index', compact('users'));
+}
 
     // Form edit akun (admin)
     public function edit($id)
