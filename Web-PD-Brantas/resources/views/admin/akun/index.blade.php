@@ -13,7 +13,7 @@
 
     <!-- TABEL DATA USER -->
     <div class="pb-3">
-        <a href="{{ route('register') }}" class="btn btn-primary">+ Tambah Data</a>
+        <a href="{{ route('admin.akun.create') }}" class="btn btn-primary">+ Tambah Data</a>
     </div>
 
     <table class="table table-striped">

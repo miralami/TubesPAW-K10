@@ -78,6 +78,8 @@ Route::middleware('auth')->group(function () {
         // Tambahan khusus admin.akun.*
         Route::prefix('akun')->name('akun.')->group(function () {
             Route::get('/', [AccountController::class, 'index'])->name('index');
+            Route::get('/create', [AccountController::class, 'create'])->name('create'); 
+            Route::post('/', [AccountController::class, 'store'])->name('store'); // <-- Ini ditambahkan
             Route::get('/{id}/edit', [AccountController::class, 'edit'])->name('edit');
             Route::put('/{id}', [AccountController::class, 'update'])->name('update');
             Route::delete('/{id}', [AccountController::class, 'destroy'])->name('destroy');
