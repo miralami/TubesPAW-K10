@@ -17,6 +17,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required|confirmed|min:6',
+            'g-recaptcha-response' => 'required|captcha'
         ]);
 
         User::create([
