@@ -10,77 +10,70 @@ use App\Http\Controllers\{
 // =======================
 // AUTH - GUEST ONLY
 // =======================
-Route::middleware('guest')->group(function () {
-    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::get('/login',    [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login',   [AuthController::class, 'login']);
+Route::middleware('guest')->controller(AuthController::class)->group(function () {
+    Route::get('/register', 'showRegisterForm')->name('register');
+    Route::post('/register', 'register');
+    Route::get('/login', 'showLoginForm')->name('login');
+    Route::post('/login', 'login');
 });
 
 // =======================
-// LANDING PAGE (Publik)
+// PUBLIC ROUTES
 // =======================
-Route::get('/',            [LandingPageController::class, 'index'])->name('landing.index');
-Route::get('/catalog',     [CatalogController::class,  'index'])->name('catalog.index');
+Route::get('/', [LandingPageController::class, 'index'])->name('landing.index');
+Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::view('/bantuan', 'bantuan')->name('help');
 
 // =======================
-// CART - AUTH ONLY
-// =======================
-Route::middleware('auth')->prefix('cart')->name('cart.')->group(function () {
-    Route::get('/', [CartController::class, 'viewCart'])->name('view');
-    Route::post('/add/{productId}', [CartController::class, 'addToCart'])->name('add');
-    Route::put('/', [CartController::class, 'bulkUpdate'])->name('update');
-    Route::delete('/{id}', [CartController::class, 'removeFromCart'])->name('remove');
-});
-
-// =======================
-// CHECKOUT - TERBUKA
-// =======================
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-
-// =======================
-// AUTHENTICATED USER ROUTES
+// AUTHENTICATED ROUTES
 // =======================
 Route::middleware('auth')->group(function () {
-
-    // Logout
+    // Auth
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Profil Pelanggan
+    // Profile
     Route::controller(AccountController::class)->group(function () {
         Route::get('/profile', 'editProfile')->name('profile.edit');
         Route::put('/profile', 'updateProfile')->name('profile.update');
     });
 
-    // Redirect user biasa dari /dashboard
-    Route::get('/dashboard', fn () => redirect()->route('landing.index'))->name('dashboard');
+    // Cart
+    Route::prefix('cart')->name('cart.')->controller(CartController::class)->group(function () {
+        Route::get('/', 'viewCart')->name('view');
+        Route::post('/add/{productId}', 'addToCart')->name('add');
+        Route::put('/', 'bulkUpdate')->name('update');
+        Route::delete('/{id}', 'removeFromCart')->name('remove');
+    });
 
-    // Review Produk
+    // Checkout
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+
+    // Reviews
     Route::post('/product/{product}/review', [ReviewController::class, 'store'])->name('reviews.store');
 
-    /*
-    |--------------------------------------------------------------------------
-    | ADMIN-ONLY ROUTES (prefix: admin, name: admin.*)
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+    // Redirect regular users from dashboard
+    Route::get('/dashboard', fn () => redirect()->route('landing.index'))->name('dashboard');
 
-        // Dashboard admin
+    // =======================
+    // ADMIN ROUTES
+    // =======================
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+        // Dashboard
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-        // Resource admin
+        // Resources
         Route::resource('products', ProductController::class);
         Route::resource('transactions', TransactionController::class)->except(['show']);
-        Route::resource('accounts', AccountController::class)->except(['show']);
 
-        // Tambahan khusus admin.akun.*
-        Route::prefix('akun')->name('akun.')->group(function () {
-            Route::get('/', [AccountController::class, 'index'])->name('index');
-            Route::get('/{id}/edit', [AccountController::class, 'edit'])->name('edit');
-            Route::put('/{id}', [AccountController::class, 'update'])->name('update');
-            Route::delete('/{id}', [AccountController::class, 'destroy'])->name('destroy');
+        // Account Management
+        Route::prefix('akun')->name('akun.')->controller(AccountController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
         });
     });
 });

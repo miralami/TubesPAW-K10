@@ -73,7 +73,7 @@
         </div>
 
         <div class="col-md-6 col-lg-3">
-            <a href="{{ route('admin.accounts.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.akun.index') }}" class="text-decoration-none">
                 <div class="card h-100 text-center border-0 shadow-sm">
                     <div class="card-body py-4">
                         <i class="bi bi-person-check display-6 text-info mb-3"></i>

@@ -49,6 +49,13 @@
                        class="form-control @error('password') is-invalid @enderror" required>
             </div>
 
+            {!! NoCaptcha::renderJs() !!}
+                {!! NoCaptcha::display() !!}
+
+                @error('g-recaptcha-response')
+                    <div class="text-danger small mt-2">{{ $message }}</div>
+                @enderror
+
             <button type="submit" class="btn btn-primary w-100">
                 Login
             </button>

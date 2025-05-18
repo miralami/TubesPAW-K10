@@ -46,6 +46,13 @@
                     <input type="password" class="form-control" name="password_confirmation" required>
                 </div>
 
+                {!! NoCaptcha::renderJs() !!}
+                {!! NoCaptcha::display() !!}
+
+                @error('g-recaptcha-response')
+                    <div class="text-danger small mt-2">{{ $message }}</div>
+                @enderror
+
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary">Daftar</button>
                 </div>
