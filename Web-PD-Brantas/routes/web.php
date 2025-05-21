@@ -68,6 +68,8 @@ Route::middleware('auth')->group(function () {
 
         // Resources
         Route::resource('products', ProductController::class);
+        Route::post('/products/import', [ProductController::class, 'import'])->name('products.import');
+        Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
         Route::resource('transactions', TransactionController::class);
 
         // Account Management

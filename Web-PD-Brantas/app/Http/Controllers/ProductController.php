@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Review; // Import the Review model
 use Illuminate\Support\Facades\Auth; // Import Auth for user authentication
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ProductsImport;
+use App\Exports\ProductsExport;
 
 class ProductController extends Controller
 {
@@ -101,5 +104,22 @@ class ProductController extends Controller
 
     // Redirect ke halaman produk dengan pesan sukses
     return redirect()->route('products.show', $product->id)->with('success', 'Review telah berhasil ditambahkan.');
+}
+
+
+public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv',
+    ]);
+
+    Excel::import(new ProductsImport, $request->file('file'));
+
+    return back()->with('success', 'Data produk berhasil diimpor!');
+}
+
+public function export()
+{
+    return Excel::download(new ProductsExport, 'products.xlsx');
 }
 }
