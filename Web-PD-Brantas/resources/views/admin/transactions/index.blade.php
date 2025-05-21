@@ -20,9 +20,9 @@
           <td>Rp{{ number_format($t->total_price,0,',','.') }}</td>
           <td>{{ $t->status }}</td>
           <td>
-            <a href="{{ route('transactions.show',$t->id) }}" class="btn btn-info btn-sm">Lihat</a>
-            <a href="{{ route('transactions.edit',$t->id) }}" class="btn btn-warning btn-sm">Edit</a>
-            <form action="{{ route('transactions.destroy',$t->id) }}" method="POST" style="display:inline">
+            <a href="{{ route('admin.transactions.show',$t->id) }}" class="btn btn-info btn-sm">Lihat</a>
+            <a href="{{ route('admin.transactions.edit',$t->id) }}" class="btn btn-warning btn-sm">Edit</a>
+            <form action="{{ route('admin.transactions.destroy',$t->id) }}" method="POST" style="display:inline">
               @csrf @method('DELETE')
               <button type="submit" class="btn btn-danger btn-sm"
                       onclick="return confirm('Yakin hapus?')">Hapus</button>

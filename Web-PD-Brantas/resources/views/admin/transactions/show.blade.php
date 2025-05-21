@@ -10,6 +10,6 @@
     <li>Status: {{ $transaction->status }}</li>
     <li>Tanggal: {{ $transaction->created_at->format('d-m-Y H:i') }}</li>
   </ul>
-  <a href="{{ route('transactions.index') }}" class="btn btn-secondary">Kembali</a>
+  <a href="{{ route('admin.transactions.index') }}" class="btn btn-secondary">Kembali</a>
 </div>
 @endsection

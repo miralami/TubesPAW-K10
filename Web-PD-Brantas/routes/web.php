@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
 
         // Resources
         Route::resource('products', ProductController::class);
-        Route::resource('transactions', TransactionController::class)->except(['show']);
+        Route::resource('transactions', TransactionController::class);
 
         // Account Management
         Route::prefix('akun')->name('akun.')->controller(AccountController::class)->group(function () {
