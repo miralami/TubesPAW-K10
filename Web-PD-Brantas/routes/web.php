@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     ProductController, AdminController, LandingPageController,
     CatalogController, CartController, CheckoutController, TransactionController,
-    AuthController, DashboardController, AccountController, ReviewController
+    AuthController, DashboardController, AccountController, ReviewController,
 };
 
 // =======================
@@ -49,8 +49,12 @@ Route::middleware('auth')->group(function () {
     // Checkout
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
+    Route::middleware('auth')->group(function () {
     // Reviews
     Route::post('/product/{product}/review', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::put('/review/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/review/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    });
 
     // Redirect regular users from dashboard
     Route::get('/dashboard', fn () => redirect()->route('landing.index'))->name('dashboard');

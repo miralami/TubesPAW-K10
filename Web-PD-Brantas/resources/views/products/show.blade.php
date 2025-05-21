@@ -65,52 +65,76 @@
             </a>
 
             <!-- Review Section -->
-        <div class="reviews mt-5">
-            <h3>Reviews</h3>
-            @if($reviews->isEmpty())
-                <p>No reviews yet.</p>
-            @else
-                @foreach($reviews as $review)
-                    <div class="review mb-3 p-3 border rounded">
-                        <strong>{{ $review->user->name }}</strong>
-                        <div class="rating">
-                            @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $review->rating)
-                                    <span class="text-warning">★</span> <!-- Bintang yang diisi -->
-                                @else
-                                    <span class="text-muted">★</span> <!-- Bintang yang kosong -->
-                                @endif
-                            @endfor
-                        </div>
-                        <p>{{ $review->comment }}</p>
-                    </div>
-                @endforeach
-            @endif
+            <div class="reviews mt-5">
+                <h3>Reviews</h3>
+                @if($reviews->isEmpty())
+                    <p>No reviews yet.</p>
+                @else
+                    @foreach($reviews as $review)
+                        <div class="review mb-3 p-3 border rounded">
+                            <strong>{{ $review->user->name }}</strong>
+                            <div class="rating">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $review->rating)
+                                        <span class="text-warning">★</span> <!-- Filled star -->
+                                    @else
+                                        <span class="text-muted">★</span> <!-- Empty star -->
+                                    @endif
+                                @endfor
+                            </div>
+                            <p>{{ $review->comment }}</p>
 
-            <!-- Review Form -->
-            @auth
-                <form action="{{ route('reviews.store', $product->id) }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="rating" class="form-label">Rating</label>
-                        <select name="rating" id="rating" class="form-select" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="comment" class="form-label">Comment</label>
-                        <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit Review</button>
-                </form>
-            @else
-                <p>Please <a href="{{ route('login') }}">log in</a> to leave a review.</p>
-            @endauth
-        </div>
+                            {{-- Display review image if available --}}
+                            @if($review->image)
+                                <div>
+                                    <img src="{{ asset('storage/' . $review->image) }}" alt="Review Image" class="img-fluid" style="max-height: 150px; object-fit:contain;">
+                                </div>
+                            @endif
+
+                            {{-- Edit and delete buttons for the review owner --}}
+                            @if(Auth::id() == $review->user_id)
+                                <div class="mt-2">
+                                    <a href="{{ route('reviews.update', $review->id) }}" class="btn btn-warning btn-sm">Update</a>
+
+                                    <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                @endif
+
+                <!-- Review Form -->
+                @auth
+                    <form action="{{ route('reviews.store', $product->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating</label>
+                            <select name="rating" id="rating" class="form-select" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Comment</label>
+                            <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Upload Image (Optional)</label>
+                            <input type="file" name="image" class="form-control" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                @else
+                    <p>Please <a href="{{ route('login') }}">log in</a> to leave a review.</p>
+                @endauth
+            </div>
         </div>
     </div>
 </div>
