@@ -28,6 +28,11 @@
 <ul class="navbar-nav ms-auto align-items-center" style="gap:2rem">
     {{-- Catalog & Bantuan --}}
     <div class="d-flex align-items-center gap-4">
+        {{-- Riwayat Transaksi --}}
+        <li class="nav-item">
+            <a class="nav-link px-2 {{ request()->is('riwayat-transaksi') ? 'active fw-semibold' : '' }}"
+               href="{{ route('transactions.riwayat') }}">Riwayat Transaksi</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link px-2 {{ request()->is('catalog') ? 'active fw-semibold' : '' }}"
                href="{{ route('catalog.index') }}">Catalog</a>

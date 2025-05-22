@@ -87,3 +87,7 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+use App\Http\Controllers\UserTransactionController;
+
+Route::get('/riwayat-transaksi', [UserTransactionController::class, 'index'])->middleware('auth')->name('transactions.riwayat');
