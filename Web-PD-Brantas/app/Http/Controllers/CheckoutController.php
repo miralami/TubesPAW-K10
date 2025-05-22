@@ -5,38 +5,48 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Tambahkan ini
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    // Method pesan untuk create otomatis transaksi
+    public function index()
+    {
+        return view('checkout.index');
+    }
+
     public function pesan(Request $request)
     {
-        $cart = session()->get('cart', []);
+        // Validasi input dari form
+        $request->validate([
+            'products.*.product_id' => 'required|exists:products,id',
+            'products.*.quantity' => 'required|integer|min:1',
+        ]);
 
-        // Cek apakah keranjang kosong
-        if (empty($cart)) {
+        $products = $request->input('products', []);
+
+        if (empty($products)) {
             return redirect()->back()->with('error', 'Keranjang kosong.');
         }
 
-        // Looping untuk menyimpan transaksi untuk setiap produk dalam keranjang
-        foreach ($cart as $item) {
-            $product = Product::findOrFail($item['id']);
+        foreach ($products as $item) {
+            $productId = $item['product_id'];
+            $quantity = $item['quantity'];
 
-            // Membuat transaksi baru
+            $product = Product::findOrFail($productId);
+
             Transaction::create([
-                'user_id'     => Auth::id() ?: null, // Mengambil ID pengguna yang login
+                'user_id'     => Auth::id(),
                 'product_id'  => $product->id,
-                'quantity'    => $item['quantity'],
-                'total_price' => $product->price * $item['quantity'],
-                'status'      => 'pending', // Status transaksi
+                'quantity'    => $quantity,
+                'total_price' => $product->price * $quantity,
+                'status'      => 'pending',
             ]);
         }
 
-        // Kosongkan session keranjang
+        // Kosongkan cart setelah checkout
         session()->forget('cart');
 
-        // Redirect ke halaman transaksi dengan pesan sukses
-        return redirect()->route('transactions.index')->with('success', 'Pesanan berhasil dibuat.');
+        // Redirect ke halaman transaksi atau landing
+        return redirect()->route('landing.index')->with('success', 'Pesanan berhasil dibuat.');
     }
 }

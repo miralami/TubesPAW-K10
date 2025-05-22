@@ -48,13 +48,17 @@ Route::middleware('auth')->group(function () {
 
     // Checkout
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout/order', [CheckoutController::class, 'pesan'])->name('transactions.orderMultiple');
 
-    Route::middleware('auth')->group(function () {
+    // Transactions
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+
+   
     // Reviews
     Route::post('/product/{product}/review', [ReviewController::class, 'store'])->name('reviews.store');
     Route::put('/review/{review}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/review/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-    });
+
 
     // Redirect regular users from dashboard
     Route::get('/dashboard', fn () => redirect()->route('landing.index'))->name('dashboard');
@@ -63,16 +67,16 @@ Route::middleware('auth')->group(function () {
     // ADMIN ROUTES
     // =======================
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-        // Dashboard
+   
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-        // Resources
+       
         Route::resource('products', ProductController::class);
         Route::post('/products/import', [ProductController::class, 'import'])->name('products.import');
         Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
         Route::resource('transactions', TransactionController::class);
 
-        // Account Management
+        
         Route::prefix('akun')->name('akun.')->controller(AccountController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');

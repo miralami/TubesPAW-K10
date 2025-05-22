@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <h3>Checkout Form</h3>
 
-                {{-- Form untuk submit semua transaksi --}}
+       
                 <form action="{{ route('transactions.orderMultiple') }}" method="POST">
                     @csrf
                     @foreach(session('cart', []) as $productId => $item)
@@ -24,7 +24,7 @@
                     <input type="hidden" name="status" value="pending">
                     <button type="submit" class="btn btn-success">Pesan Sekarang</button>
                 </form>
-
+      
             </div>
         </div>
     </div>
