@@ -31,10 +31,18 @@
             <div class="mb-3 text-center">
                 <label class="form-label">Foto Profil</label>
                 <br>
-                <img id="preview" 
-                    src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
-                    alt="Foto Profil" 
-                    style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;">
+
+                {{-- Preview utama --}}
+                @if(Auth::user()->profile_picture && file_exists(public_path('storage/' . Auth::user()->profile_picture)))
+                    <img id="preview"
+                        src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
+                        alt="Foto Profil"
+                        style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;">
+                @else
+                    <div id="preview-placeholder"
+                        style="width: 200px; height: 200px; background-color: #ccc; border-radius: 50%; display: inline-block;">
+                    </div>
+                @endif
 
                 <div class="mt-3">
                     <input type="file" 
@@ -45,6 +53,8 @@
                         accept="image/*">
                 </div>
             </div>
+
+
 
             {{-- Nama --}}
             <div class="mb-3">

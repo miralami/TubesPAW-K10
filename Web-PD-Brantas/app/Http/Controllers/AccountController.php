@@ -114,10 +114,12 @@ namespace App\Http\Controllers;
                 'photo'     => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
                 'password'  => 'nullable|confirmed|min:6',
                 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'address'  => 'nullable|string|max:255',
             ]);
 
             $user->name  = $request->name;
             $user->email = $request->email;
+            $user->address = $request->address;
 
             if ($request->filled('password')) {
                 $user->password = Hash::make($request->password);
