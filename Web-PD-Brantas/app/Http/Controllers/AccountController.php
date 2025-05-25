@@ -113,6 +113,7 @@ namespace App\Http\Controllers;
                 'email'     => 'required|email|max:255|unique:users,email,' . $user->id,
                 'photo'     => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
                 'password'  => 'nullable|confirmed|min:6',
+                'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             ]);
 
             $user->name  = $request->name;
@@ -122,11 +123,11 @@ namespace App\Http\Controllers;
                 $user->password = Hash::make($request->password);
             }
 
-            if ($request->hasFile('photo')) {
-                if ($user->photo && Storage::disk('public')->exists($user->photo)) {
-                    Storage::disk('public')->delete($user->photo);
+            if ($request->hasFile('profile_picture')) {
+                if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
+                    Storage::disk('public')->delete($user->profile_picture);
                 }
-                $user->photo = $request->file('photo')->store('photos', 'public');
+                $user->profile_picture = $request->file('profile_picture')->store('photos', 'public');
             }
 
             $user->save();
