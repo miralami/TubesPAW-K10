@@ -59,17 +59,20 @@
         @auth
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center px-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
-                        alt="Foto Profil"
-                        style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; margin-right: 8px;">
+                    @if(Auth::user()->profile_picture && file_exists(public_path('storage/' . Auth::user()->profile_picture)))
+                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
+                            style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%; margin-right: 8px;">
+                    @else
+                        <div style="width: 40px; height: 40px; background-color: #ccc; border-radius: 50%; margin-right: 8px;"></div>
+                    @endif
                     {{ Str::limit(Auth::user()->name, 12) }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     @if(Auth::user()->role === 'admin')
-                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Menu Admin</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Menu</a></li>
                     <li><hr class="dropdown-divider"></li>
                     @endif
-                    <li class="dropdown-item">{{ Auth::user()->name }}</li>
+                    <li><span class="dropdown-item-text fw-semibold">{{ Auth::user()->name }}</span></li>
                     <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profil</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
@@ -78,7 +81,6 @@
                             <button type="submit" class="btn btn-sm btn-danger w-100">Logout</button>
                         </form>
                     </li>
-                </ul>
             </li>
         @else
             <li class="nav-item">
