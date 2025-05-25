@@ -12,6 +12,8 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
+
+@stack('scripts')
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top"
      style="background-color:#121212;padding:.75rem 0">
@@ -55,9 +57,11 @@
 
         {{-- Profil / Login --}}
         @auth
-            <img src="{{ asset('images/' . Auth::user()->profile_picture) }}"
-                alt="Foto Profil"
-                style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+        <a href="{{ route('profile.edit') }}">
+            <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
+            alt="Foto Profil"
+            style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+        </a>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle px-2" href="#" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false">
