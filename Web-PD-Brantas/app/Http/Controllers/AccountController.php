@@ -113,10 +113,12 @@ namespace App\Http\Controllers;
                 'email'     => 'required|email|max:255|unique:users,email,' . $user->id,
                 'photo'     => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
                 'password'  => 'nullable|confirmed|min:6',
+                'address' => 'nullable|string|max:2048',
             ]);
 
             $user->name  = $request->name;
             $user->email = $request->email;
+            $user->address = $request->address;
 
             if ($request->filled('password')) {
                 $user->password = Hash::make($request->password);

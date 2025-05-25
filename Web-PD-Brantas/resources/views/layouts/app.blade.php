@@ -55,6 +55,9 @@
 
         {{-- Profil / Login --}}
         @auth
+        <img src="{{ asset('images/' . Auth::user()->profile_picture) }}"
+            alt="Foto Profil"
+            style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle px-2" href="#" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false">

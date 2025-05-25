@@ -45,6 +45,14 @@
                    class="form-control @error('email') is-invalid @enderror" required>
         </div>
 
+        {{-- Alamat --}}
+        <div class="mb-3">
+            <label class="form-label">Alamat</label>
+            <input type="text" name="address"
+                   value="{{ old('address', Auth::user()->address) }}"
+                   class="form-control @error('email') is-invalid @enderror" required>
+        </div>
+
         {{-- Password Baru --}}
         <div class="mb-3">
             <label class="form-label">Password Baru

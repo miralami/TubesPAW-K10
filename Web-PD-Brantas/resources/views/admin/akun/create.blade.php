@@ -24,8 +24,8 @@
         <div class="mb-3">
             <label>Peran (Role)</label>
             <select name="role" class="form-control" required>
-                <option value="admin">Admin</option>
-                <option value="pelanggan">User</option>
+                <option value="admin">admin</option>
+                <option value="pelanggan">user</option>
             </select>
         </div>
         <button class="btn btn-success">Simpan</button>
