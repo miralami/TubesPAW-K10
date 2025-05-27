@@ -39,12 +39,56 @@
                     <span class="badge bg-warning p-3"><i class="bi bi-receipt fs-5"></i></span>
                     <div>
                         <h6 class="mb-0">Pesanan Hari Ini</h6>
-                        {{-- <h4 class="fw-bold mb-0">{{ $todayOrders }}</h4> --}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+{{-- Total Terjual --}}
+  <div class="col-sm-6 col-lg-4">
+    <div class="card shadow-sm border-0">
+      <div class="card-body d-flex align-items-center gap-3">
+        <span class="badge bg-info p-3"><i class="bi bi-bar-chart fs-5"></i></span>
+        <div>
+          <h6 class="mb-0">Total Terjual</h6>
+          <h4 class="fw-bold mb-0">{{ $soldCount }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{-- Top 5 Produk Terlaris --}}
+  <div class="col-sm-6 col-lg-4">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h6 class="mb-3">Top 5 Produk Terlaris</h6>
+        <ul class="list-unstyled mb-0">
+          @foreach($topProducts as $prod)
+            <li class="d-flex justify-content-between align-items-center py-1">
+              <span>{{ $loop->iteration }}. {{ Str::limit($prod->name, 25) }}</span>
+              <span class="badge bg-primary bg-opacity-10 text-primary">
+                {{ $prod->sold }}
+              </span>
+            </li>
+          @endforeach
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+    {{-- kartu-kartu lain: Total Produk, Pengguna, Pesanan Hari Ini --}}
+    <div class="col-sm-6 col-lg-4">
+        {{-- ...Total Produk... --}}
+    </div>
+    <div class="col-sm-6 col-lg-4">
+        {{-- ...Pengguna Terdaftar... --}}
+    </div>
+    <div class="col-sm-6 col-lg-4">
+        {{-- ...Pesanan Hari Ini... --}}
+    </div>
+</div>
 
     {{-- Weather widget (lokasi user) sudah ditampilkan di atas otomatis --}}
 

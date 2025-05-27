@@ -9,15 +9,53 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Carbon;
 
 class ProductController extends Controller
 {
     // Daftar produk (admin)
-    public function index()
-    {
-        $products = Product::all();
-        return view('admin.products.index', compact('products'));
+
+public function index(Request $request)
+{
+    // 1. Query dinamis: search di name/description, filter category
+    $query = Product::query();
+
+    if ($request->filled('search')) {
+        $q = $request->search;
+        $query->where(function($qr) use ($q) {
+            $qr->where('name', 'like', "%{$q}%")
+               ->orWhere('description', 'like', "%{$q}%");
+        });
     }
+
+    if ($request->filled('category')) {
+        $query->where('category', $request->category);
+    }
+
+    // 2. Pagination (10 per halaman)
+    $products = $query
+    ->orderByDesc('created_at')
+    ->paginate(10)          // ← numeric pagination
+    ->appends($request->query());
+
+
+    // 3. Statistik sederhana (jika masih dipakai)
+    $totalProduct = Product::count();
+    $newProduct   = Product::where('created_at', '>=', Carbon::now()->subDays(7))->count();
+    $lowStock     = Product::where('stock', '<=', 5)->count();
+    $outOfStock   = Product::where('stock', 0)->count();
+
+    // 4. List kategori untuk dropdown
+    $categories = Product::select('category')
+                         ->distinct()
+                         ->pluck('category');
+
+    return view('admin.products.index', compact(
+        'products',
+        'totalProduct', 'newProduct', 'lowStock', 'outOfStock',
+        'categories'
+    ));
+}
 
     // Simpan produk baru (dengan upload gambar)
     public function store(Request $request)

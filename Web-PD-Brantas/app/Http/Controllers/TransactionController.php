@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Transaction;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -27,19 +28,35 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'product_id'  => 'required|exists:products,id',
-            'quantity'    => 'required|integer|min:1',
-            'status'      => 'required|string',
+            'product_id' => 'required|exists:products,id',
+            'quantity'   => 'required|integer|min:1',
+            'status'     => 'required|string',
         ]);
 
+        // ambil produk
         $product = Product::findOrFail($data['product_id']);
-        $data['user_id']     = Auth::id() ?: null;
+
+        // cek stok
+        if ($data['quantity'] > $product->stock) {
+            return back()
+                ->withErrors(['quantity' => 'Stok tidak mencukupi. Tersisa: ' . $product->stock])
+                ->withInput();
+        }
+
+        // siapkan data transaksi
+        $data['user_id']     = Auth::id();
         $data['total_price'] = $product->price * $data['quantity'];
 
-        Transaction::create($data);
+        // lakukan create + decrement stok dalam satu transaksi DB
+        DB::transaction(function() use ($data, $product) {
+            Transaction::create($data);
+            $product->decrement('stock', $data['quantity']);
+            $product->increment('sold', $data['quantity']);
+        });
 
-        return redirect()->route('admin.transactions.index')
-                         ->with('success', 'Transaksi berhasil dibuat.');
+        return redirect()
+            ->route('admin.transactions.index')
+            ->with('success', 'Transaksi berhasil dibuat dan stok diperbarui.');
     }
 
     // 4. Detail transaksi

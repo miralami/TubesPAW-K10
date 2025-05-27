@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
     // =======================
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('products/export', [ProductController::class, 'export'])
             ->name('products.export');
         Route::post('products/import', [ProductController::class, 'import'])
