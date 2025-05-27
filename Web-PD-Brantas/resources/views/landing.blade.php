@@ -18,7 +18,7 @@
         height:100vh;
         background:
             linear-gradient(rgba(0,0,60,.65),rgba(0,0,60,.65)),
-            url('/images/hero-pic.jpeg') center/cover no-repeat;
+            url('/images/toko.jpg') center/cover no-repeat;
     }
 </style>
 @endpush
@@ -54,8 +54,6 @@
     </b><br> <br>
     dalam melayani pelanggan institusi pemerintah dan swasta.
 </p>
-
-
         <div class="row text-center gy-4">
             <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
                 <i class="bi bi-shield-lock fs-1 text-primary mb-2"></i>

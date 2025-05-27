@@ -15,13 +15,26 @@
         Tambah Produk
     </button>
 
-    {{-- Tombol Import dan Export --}}
-    <form action="{{ route('admin.products.import') }}" method="POST" enctype="multipart/form-data" class="d-flex gap-2 mb-3">
-        @csrf
-        <input type="file" name="file" required class="form-control" style="max-width: 300px;">
-        <button class="btn btn-success">Import Excel</button>
-        <a href="{{ route('admin.products.export') }}" class="btn btn-secondary">Export Excel</a>
-    </form>
+
+<form action="{{ route('admin.products.import') }}"
+      method="POST"
+      enctype="multipart/form-data"
+      class="mb-3">
+    @csrf
+
+    <div class="row g-2 align-items-center">
+        {{-- File input --}}
+        <div class="col-auto">
+            <input type="file" name="file" required class="form-control">
+        </div>
+
+        {{-- Buttons --}}
+        <div class="col-auto">
+            <button class="btn btn-success">Import Excel</button>
+            <a href="{{ route('admin.products.export') }}" class="btn btn-secondary">Export Excel</a>
+        </div>
+    </div>
+</form>
 
     {{-- Tabel Produk --}}
     <table class="table table-bordered table-hover table-rounded shadow-sm">

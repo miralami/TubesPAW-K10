@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
     // Transactions
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
-   
+
     // Reviews
     Route::post('/product/{product}/review', [ReviewController::class, 'store'])->name('reviews.store');
     Route::put('/review/{review}', [ReviewController::class, 'update'])->name('reviews.update');
@@ -67,16 +67,16 @@ Route::middleware('auth')->group(function () {
     // ADMIN ROUTES
     // =======================
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-   
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-       
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('products/export', [ProductController::class, 'export'])
+            ->name('products.export');
+        Route::post('products/import', [ProductController::class, 'import'])
+            ->name('products.import');
         Route::resource('products', ProductController::class);
-        Route::post('/products/import', [ProductController::class, 'import'])->name('products.import');
-        Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
         Route::resource('transactions', TransactionController::class);
 
-        
+
         Route::prefix('akun')->name('akun.')->controller(AccountController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
