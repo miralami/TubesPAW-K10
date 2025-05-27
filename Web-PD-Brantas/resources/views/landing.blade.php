@@ -54,8 +54,6 @@
     </b><br> <br>
     dalam melayani pelanggan institusi pemerintah dan swasta.
 </p>
-
-
         <div class="row text-center gy-4">
             <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
                 <i class="bi bi-shield-lock fs-1 text-primary mb-2"></i>

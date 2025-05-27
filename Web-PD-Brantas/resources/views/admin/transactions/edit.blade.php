@@ -23,8 +23,11 @@
     </div>
     <div class="mb-3">
       <label>Status</label>
-      <input type="text" name="status" class="form-control"
-             value="{{ $transaction->status }}" required>
+      <select name="status" class="form-control" required>
+        <option value="pending" {{ $transaction->status == 'pending' ? 'selected' : '' }}>pending</option>
+        <option value="dalam perjalanan" {{ $transaction->status == 'dalam perjalanan' ? 'selected' : '' }}>dalam perjalanan</option>
+        <option value="selesai" {{ $transaction->status == 'selesai' ? 'selected' : '' }}>selesai</option>
+      </select>
     </div>
     <button class="btn btn-primary">Update</button>
   </form>
