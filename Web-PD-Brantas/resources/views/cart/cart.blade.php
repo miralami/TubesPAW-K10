@@ -6,7 +6,7 @@
     <h2 class="text-center mb-5">Your Cart ({{ count($cart = session('cart', [])) }} items)</h2>
 
     @if($cart)
-    {{-- ===== Cart form ===== --}}
+    {{-- ===== Cart form (for updating quantity) ===== --}}
     <form action="{{ route('cart.update') }}" method="POST">
         @csrf
         @method('PUT')
@@ -32,8 +32,8 @@
                             @php
                                 $subtotal = $item['price'] * $item['quantity'];
                                 $total   += $subtotal;
-                                $qty = $item['quantity'];
-                            @endphp
+                  
+                                @endphp
                             <tr>
                                 {{-- Item --}}
                                 <td>
@@ -46,7 +46,7 @@
 
                                 {{-- Price --}}
                                 <td class="text-end">
-                                    Rp{{ number_format($item['price'],0,',','.') }}
+                                    Rp{{ number_format($item['price'], 0, ',', '.') }}
                                 </td>
 
                                 {{-- Qty on cart --}}
@@ -55,6 +55,7 @@
                                         {{ $item['quantity'] }} pcs
                                     </span>
                                 </td>
+
                                 {{-- Qty input --}}
                                 <td class="text-center">
                                     <input type="number" name="quantities[{{ $id }}]"
@@ -64,17 +65,17 @@
 
                                 {{-- Subtotal --}}
                                 <td class="text-end fw-semibold">
-                                    Rp{{ number_format($subtotal,0,',','.') }}
+                                    Rp{{ number_format($subtotal, 0, ',', '.') }}
                                 </td>
 
-                                {{-- Remove --}}
+                                {{-- Remove Button (outside form below) --}}
                                 <td class="text-end">
-                                    <form action="{{ route('cart.remove', $id) }}" method="POST">
-                                        @csrf
-                                        <button class="btn btn-sm btn-link text-danger">
-                                            &times;
-                                        </button>
-                                    </form>
+                                    <button type="submit"
+                                            form="remove-form-{{ $id }}"
+                                            class="btn btn-sm btn-link text-danger"
+                                            onclick="return confirm('Yakin ingin menghapus item ini?')">
+                                        &times;
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -95,15 +96,15 @@
                         <div class="d-flex justify-content-between mb-2">
                             <span>Subtotal:</span>
                             <span class="fw-semibold">
-                                Rp{{ number_format($total,0,',','.') }}
+                                Rp{{ number_format($total, 0, ',', '.') }}
                             </span>
                         </div>
-                        {{-- tempat pajak / ongkir jika nanti perlu --}}
+
                         <hr>
                         <div class="d-flex justify-content-between mb-3 fs-5">
                             <strong>Total:</strong>
                             <strong class="text-primary">
-                                Rp{{ number_format($total,0,',','.') }}
+                                Rp{{ number_format($total, 0, ',', '.') }}
                             </strong>
                         </div>
 
@@ -115,6 +116,15 @@
             </div>
         </div>
     </form>
+
+    {{-- ===== DELETE forms (outside the main form) ===== --}}
+    @foreach($cart as $id => $item)
+        <form id="remove-form-{{ $id }}" action="{{ route('cart.remove', $id) }}" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
+    @endforeach
+
     @else
         <p class="text-center text-muted">Your cart is empty.</p>
         <div class="text-center mt-3">
