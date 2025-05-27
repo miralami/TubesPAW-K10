@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductsSeeder extends Seeder
 {
@@ -17,7 +19,7 @@ class ProductsSeeder extends Seeder
                 'stock'       => 20,
                 'sold'        => 0,
                 'category'    => 'TNI',
-                'image'       => 'products/sepatu_pdl.jpg',
+                'image'       => 'sepatu_pdl.jpg',
             ],
             [
                 'name'        => 'Topi Polisi',
@@ -26,7 +28,7 @@ class ProductsSeeder extends Seeder
                 'stock'       => 15,
                 'sold'        => 0,
                 'category'    => 'Polisi',
-                'image'       => 'products/topi_polisi.jpg',
+                'image'       => 'topi_polisi.jpg',
             ],
             [
                 'name'        => 'Topi TNI Baret',
@@ -35,7 +37,7 @@ class ProductsSeeder extends Seeder
                 'stock'       => 12,
                 'sold'        => 0,
                 'category'    => 'TNI',
-                'image'       => 'products/topi_tni_baret.jpg',
+                'image'       => 'topi_tni_baret.jpg',
             ],
             [
                 'name'        => 'Topi TNI Loreng',
@@ -44,7 +46,7 @@ class ProductsSeeder extends Seeder
                 'stock'       => 18,
                 'sold'        => 0,
                 'category'    => 'TNI',
-                'image'       => 'products/topi_tni.jpg',
+                'image'       => 'topi_tni.jpg',
             ],
             [
                 'name'        => 'Jas Hujan Ponco',
@@ -53,11 +55,20 @@ class ProductsSeeder extends Seeder
                 'stock'       => 25,
                 'sold'        => 0,
                 'category'    => 'Aksesoris',
-                'image'       => 'products/jas_hujan.jpg',
+                'image'       => 'jas_hujan.jpg',
             ],
         ];
 
         foreach ($items as $item) {
+            $source = database_path('seeders/assets/' . $item['image']);
+            $newFileName = Str::random(10) . '_' . $item['image'];
+
+            // Simpan file ke storage/app/public/products/
+            Storage::disk('public')->put('products/' . $newFileName, file_get_contents($source));
+
+            // Ganti path image jadi bisa diakses via browser
+            $item['image'] = 'storage/products/' . $newFileName;
+
             Product::create($item);
         }
     }

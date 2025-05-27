@@ -18,7 +18,7 @@
         height:100vh;
         background:
             linear-gradient(rgba(0,0,60,.65),rgba(0,0,60,.65)),
-            url('/images/hero-pic.jpeg') center/cover no-repeat;
+            url('/images/toko.jpg') center/cover no-repeat;
     }
 </style>
 @endpush
@@ -87,7 +87,7 @@
                     <div class="card h-100 border-0 fancy-card" data-aos="zoom-in-up"
                          data-aos-delay="{{ $loop->index * 80 }}">
                         <div class="ratio ratio-1x1">
-                            <img src="{{ asset('storage/'.$product->image) }}"
+                            <img src="{{ asset($product->image) }}"
                                  alt="{{ $product->name }}"
                                  class="rounded-top object-fit-cover">
                         </div>

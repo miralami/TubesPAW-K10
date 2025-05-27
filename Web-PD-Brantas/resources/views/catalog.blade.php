@@ -49,10 +49,12 @@
                         </span>
 
                         {{-- gambar --}}
-                        <div style="height:180px;overflow:hidden">
-                            <img src="{{ asset('storage/' . $product->image) }}"
-                                class="w-100 h-100 object-fit-cover" alt="{{ $product->name }}">
+                        <div style="height: 180px; overflow: hidden">
+                            <img src="{{ asset($product->image) }}"
+                                class="w-100 h-100 object-fit-cover"
+                                alt="{{ $product->name }}">
                         </div>
+
 
                         <div class="card-body d-flex flex-column text-center">
                             <h6 class="card-title mb-1">{{ $product->name }}</h6>
