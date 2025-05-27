@@ -107,33 +107,29 @@
                     @endforeach
                 @endif
 
-                <!-- Review Form -->
+                {{-- Form add-to-cart --}}
                 @auth
-                    <form action="{{ route('reviews.store', $product->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-4">
                         @csrf
-                        <div class="mb-3">
-                            <label for="rating" class="form-label">Rating</label>
-                            <select name="rating" id="rating" class="form-select" required>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
+                        <div class="input-group" style="max-width:200px">
+                            <input type="number" name="qty" value="1" min="1"
+                                max="{{ $product->stock }}"
+                                class="form-control text-center" aria-label="Quantity">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-cart-plus me-1"></i> Add to Cart
+                            </button>
                         </div>
-                        <div class="mb-3">
-                            <label for="comment" class="form-label">Comment</label>
-                            <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Upload Image (Optional)</label>
-                            <input type="file" name="image" class="form-control" accept="image/*">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit Review</button>
                     </form>
-                @else
-                    <p>Please <a href="{{ route('login') }}">log in</a> to leave a review.</p>
                 @endauth
+
+                @guest
+                    <div class="mt-4">
+                        <a href="{{ route('login') }}" class="btn btn-outline-secondary">
+                            Please login to buy products
+                        </a>
+                    </div>
+                @endguest
+
             </div>
         </div>
     </div>

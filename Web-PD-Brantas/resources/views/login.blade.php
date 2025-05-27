@@ -9,7 +9,7 @@
         max-width:420px;
         width:100%;
         backdrop-filter:blur(4px);
-        background:rgba(255,255,255,.9);
+        background-color: #f8fafc;
     }
 </style>
 @endpush
@@ -17,7 +17,7 @@
 @section('content')
 <div class="container d-flex align-items-center justify-content-center" style="min-height:80vh">
     <div class="card shadow-lg auth-card p-4" data-aos="zoom-in">
-        <h3 class="text-center fw-bold mb-4">Sign In</h3>
+        <h3 class="text-center fw-bold mb-4">Login</h3>
 
         {{-- flash success (mis. setelah register) --}}
         @if(session('success'))
@@ -48,10 +48,6 @@
                 <input type="password" name="password"
                        class="form-control @error('password') is-invalid @enderror" required>
             </div>
-
-            {!! NoCaptcha::renderJs() !!}
-                {!! NoCaptcha::display() !!}
-
                 @error('g-recaptcha-response')
                     <div class="text-danger small mt-2">{{ $message }}</div>
                 @enderror
