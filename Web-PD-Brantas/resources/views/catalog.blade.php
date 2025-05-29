@@ -21,15 +21,13 @@
 
                     <select name="category" class="form-select">
                         <option value="">Semua</option>
-                        @foreach($categories as $cat)   {{-- ← pakai $categories dari controller --}}
+                        @foreach($categories as $cat)
                             <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected':'' }}>
                                 {{ $cat }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-                {{-- Filter harga --}}
-
 
                 <button class="btn btn-primary w-100">Terapkan</button>
             </form>
@@ -50,11 +48,10 @@
 
                         {{-- gambar --}}
                         <div style="height: 180px; overflow: hidden">
-                            <img src="{{ asset($product->image) }}"
+                            <img src="{{ asset('storage/' . $product->image) }}"
                                 class="w-100 h-100 object-fit-cover"
                                 alt="{{ $product->name }}">
                         </div>
-
 
                         <div class="card-body d-flex flex-column text-center">
                             <h6 class="card-title mb-1">{{ $product->name }}</h6>
