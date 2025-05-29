@@ -5,7 +5,7 @@
     <div class="alert alert-success text-center mb-0">{{ session('success') }}</div>
 @endif
 
-<div class="container py-5" data-aos="fade-up" data-aos-duration="1000">
+<div class="container py-5">
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('catalog.index') }}">Catalog</a></li>
@@ -14,14 +14,16 @@
     </nav>
 
     <div class="row g-5 align-items-start">
-        <div class="col-lg-5 text-center" data-aos="fade-left" data-aos-duration="1200">
+        <!-- Gambar Produk -->
+        <div class="col-lg-5 text-center fade-in" style="transition: opacity 1s ease;">
             <div class="border rounded shadow-sm p-2 bg-white">
                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
                      class="img-fluid" style="max-height:420px;object-fit:contain">
             </div>
         </div>
 
-        <div class="col-lg-7" data-aos="fade-right" data-aos-duration="1500">
+        <!-- Detail Produk -->
+        <div class="col-lg-7 fade-in" style="transition: opacity 1s ease;">
             <span class="badge bg-secondary mb-2">{{ $product->category }}</span>
             <h2 class="fw-semibold" style="color: #000;">{{ $product->name }}</h2>
             <p class="text-muted" style="color: #000;">{{ $product->description }}</p>
@@ -33,7 +35,7 @@
                 <span class="text-muted" style="color: #000;">Terjual: {{ $product->sold }}</span>
             </p>
 
-            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-4" data-aos="zoom-in" data-aos-duration="1000">
+            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-4 fade-in" style="transition: opacity 1s ease;">
                 @csrf
                 <div class="input-group" style="max-width:200px">
                     <input type="number" name="qty" value="1" min="1"
@@ -45,21 +47,21 @@
                 </div>
             </form>
 
-            <a href="{{ route('catalog.index') }}" class="btn btn-outline-secondary mt-4" data-aos="fade-up" data-aos-duration="1200">
+            <a href="{{ route('catalog.index') }}" class="btn btn-outline-secondary mt-4 fade-in" style="transition: opacity 1s ease;">
                 ← Back to Catalog
             </a>
 
             <!-- Review Section -->
             <div class="reviews mt-5">
-                <h3 data-aos="fade-up" data-aos-duration="1000">Reviews</h3>
+                <h3 class="fade-in" style="transition: opacity 1s ease;">Reviews</h3>
 
                 <!-- Add Review Button -->
                 @auth
-                    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#reviewModal" data-aos="zoom-in" data-aos-duration="1000">
+                    <button class="btn btn-primary mb-3 fade-in" data-bs-toggle="modal" data-bs-target="#reviewModal" style="transition: opacity 1s ease;">
                         Add Review
                     </button>
                 @else
-                    <p class="text-muted" style="color: #000;">Please <a href="{{ route('login') }}">login</a> to leave a review.</p>
+                    <p class="text-muted" style="color: #000;" class="fade-in">Please <a href="{{ route('login') }}">login</a> to leave a review.</p>
                 @endauth
                 
                 <!-- Rating Filter -->
@@ -79,91 +81,94 @@
                 </div>
 
                 @if($reviews->isEmpty())
-                    <p style="color: #000;">No reviews yet.</p>
+                    <p style="color: #000;" class="fade-in">No reviews yet.</p>
                 @else
                     @foreach($reviews as $review)
-                        <div class="review mb-3 p-3 border rounded" style="color: #000;" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="d-flex justify-content-between">
-                                <strong>{{ $review->user->name }}</strong>
-                                <small class="text-muted">{{ $review->created_at->format('M d, Y') }}</small>
-                            </div>
-                            <div class="rating">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $review->rating)
-                                        <span class="text-warning">★</span>
-                                    @else
-                                        <span class="text-muted">★</span>
-                                    @endif
-                                @endfor
-                            </div>
-                            <p>{{ $review->comment }}</p>
-
-                            @if($review->image)
-                                <div>
-                                    <img src="{{ asset('storage/' . $review->image) }}" alt="Review Image" class="img-fluid" style="max-height: 150px; object-fit:contain;">
+                        <!-- Filter reviews by rating -->
+                        @if(!request('rating') || $review->rating == request('rating'))
+                            <div class="review mb-3 p-3 border rounded fade-in" style="transition: opacity 1s ease;">
+                                <div class="d-flex justify-content-between">
+                                    <strong>{{ $review->user->name }}</strong>
+                                    <small class="text-muted">{{ $review->created_at->format('M d, Y') }}</small>
                                 </div>
-                            @endif
-
-                            @if(Auth::id() == $review->user_id)
-                                <div class="mt-2">
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editReviewModal{{ $review->id }}">
-                                        Edit
-                                    </button>
-
-                                    <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                    </form>
+                                <div class="rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $review->rating)
+                                            <span class="text-warning">★</span>
+                                        @else
+                                            <span class="text-muted">★</span>
+                                        @endif
+                                    @endfor
                                 </div>
-                            @endif
-                        </div>
+                                <p>{{ $review->comment }}</p>
 
-                        <!-- Edit Review Modal -->
-                        <div class="modal fade" id="editReviewModal{{ $review->id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Edit Review</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                @if($review->image)
+                                    <div>
+                                        <img src="{{ asset('storage/' . $review->image) }}" alt="Review Image" class="img-fluid" style="max-height: 150px; object-fit:contain;">
                                     </div>
-                                    <form action="{{ route('reviews.update', $review->id) }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label for="rating">Rating:</label>
-                                                <select name="rating" class="form-select" required>
-                                                    @for($i = 1; $i <= 5; $i++)
-                                                        <option value="{{ $i }}" {{ $i == $review->rating ? 'selected' : '' }}>{{ $i }} star</option>
-                                                    @endfor
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="comment">Comment:</label>
-                                                <textarea name="comment" class="form-control" rows="3">{{ $review->comment }}</textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="image">Change Image (optional):</label>
-                                                <input type="file" name="image" class="form-control">
-                                                @if($review->image)
-                                                    <div class="mt-2">
-                                                        <img src="{{ asset('storage/' . $review->image) }}" alt="Current Image" style="max-height: 100px;">
-                                                        <label class="mt-2">
-                                                            <input type="checkbox" name="remove_image"> Remove current image
-                                                        </label>
-                                                    </div>
-                                                @endif
-                                            </div>
+                                @endif
+
+                                @if(Auth::id() == $review->user_id)
+                                    <div class="mt-2">
+                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editReviewModal{{ $review->id }}">
+                                            Edit
+                                        </button>
+
+                                        <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Edit Review Modal -->
+                            <div class="modal fade" id="editReviewModal{{ $review->id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Review</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-primary">Update Review</button>
-                                        </div>
-                                    </form>
+                                        <form action="{{ route('reviews.update', $review->id) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="rating">Rating:</label>
+                                                    <select name="rating" class="form-select" required>
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            <option value="{{ $i }}" {{ $i == $review->rating ? 'selected' : '' }}>{{ $i }} star</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="comment">Comment:</label>
+                                                    <textarea name="comment" class="form-control" rows="3">{{ $review->comment }}</textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="image">Change Image (optional):</label>
+                                                    <input type="file" name="image" class="form-control">
+                                                    @if($review->image)
+                                                        <div class="mt-2">
+                                                            <img src="{{ asset('storage/' . $review->image) }}" alt="Current Image" style="max-height: 100px;">
+                                                            <label class="mt-2">
+                                                                <input type="checkbox" name="remove_image"> Remove current image
+                                                            </label>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Update Review</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endforeach
                 @endif
             </div>
