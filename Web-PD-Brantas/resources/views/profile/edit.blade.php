@@ -1,110 +1,121 @@
-@extends('layouts.app') {{-- atau layouts.admin, sesuaikan --}}
+@extends('layouts.app')
 @section('title', 'Edit Profil')
 
+@push('styles')
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+<style>
+    body {
+        background-color: #0f2c59;
+        min-height: 100vh;
+    }
+
+    .auth-card {
+        max-width: 480px;
+        width: 100%;
+        backdrop-filter: blur(4px);
+        background-color: rgba(248, 250, 252, 0.85);
+        border-radius: 10px;
+    }
+
+    .btn-custom {
+        background-color: #20B2AA;
+        color: white;
+        border: none;
+    }
+
+    .btn-custom:hover {
+        background-color: #199e97;
+        color: white;
+    }
+
+    .form-label {
+        font-weight: 500;
+    }
+
+    .preview-img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+    }
+</style>
+@endpush
+
 @section('content')
-<div class="container py-5" style="max-width:640px">
-    <h2 class="mb-4 fw-semibold">Edit Profil</h2>
+<div class="container d-flex align-items-center justify-content-center" style="min-height:80vh">
+    <div class="card shadow-lg auth-card p-4" data-aos="zoom-in">
+        <h3 class="text-center fw-bold mb-4">Edit Profil</h3>
 
-    {{-- tampilkan pesan sukses --}}
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+        {{-- Pesan sukses --}}
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-    {{-- tampilkan error validasi --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $err)
-                    <li>{{ $err }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        {{-- Validasi --}}
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0 small">
+                    @foreach ($errors->all() as $err)
+                        <li>{{ $err }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="card-profile" style="max-width:640px">
-        @csrf
-        @method('PUT')
+        <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
 
-        <div class="card-body p-4">
-
-            {{-- Foto --}}
-            <div class="mb-3 text-center">
-                <label class="form-label">Foto Profil</label>
-                <br>
-
-                {{-- Preview utama --}}
+            {{-- Foto Profil --}}
+            <div class="text-center mb-3">
                 @if(Auth::user()->profile_picture && file_exists(public_path('storage/' . Auth::user()->profile_picture)))
-                    <img id="preview"
-                        src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
-                        alt="Foto Profil"
-                        style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;">
+                    <img id="preview" src="{{ asset('storage/' . Auth::user()->profile_picture) }}" class="preview-img" alt="Foto Profil">
                 @else
-                    <div id="preview-placeholder"
-                        style="width: 200px; height: 200px; background-color: #ccc; border-radius: 50%; display: inline-block;">
-                    </div>
+                    <div id="preview-placeholder" class="preview-img mx-auto" style="background-color: #ccc;"></div>
                 @endif
-
-                <div class="mt-3">
-                    <input type="file" 
-                        name="profile_picture" 
-                        id="profile_picture" 
-                        class="form-control" 
-                        style="max-width:300px; margin: 0 auto;" 
-                        accept="image/*">
-                </div>
+                <input type="file" name="profile_picture" id="profile_picture" class="form-control mt-2 mx-auto" style="max-width: 300px;" accept="image/*">
             </div>
 
-
-
-            {{-- Nama --}}
             <div class="mb-3">
                 <label class="form-label">Nama Lengkap</label>
-                <input type="text" name="name"
-                    value="{{ old('name', Auth::user()->name) }}"
+                <input type="text" name="name" value="{{ old('name', Auth::user()->name) }}"
                     class="form-control @error('name') is-invalid @enderror" required>
             </div>
 
-            {{-- Email --}}
             <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" name="email"
-                    value="{{ old('email', Auth::user()->email) }}"
+                <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}"
                     class="form-control @error('email') is-invalid @enderror" required>
             </div>
 
-            {{-- Alamat --}}
             <div class="mb-3">
                 <label class="form-label">Alamat</label>
-                <input type="text" name="address"
-                    value="{{ old('address', Auth::user()->address) }}"
+                <input type="text" name="address" value="{{ old('address', Auth::user()->address) }}"
                     class="form-control @error('address') is-invalid @enderror" required>
             </div>
 
-            {{-- Password Baru --}}
             <div class="mb-3">
-                <label class="form-label">Password Baru
-                    <span class="text-muted">(kosongkan jika tidak mengganti)</span>
-                </label>
+                <label class="form-label">Password Baru <span class="text-muted">(opsional)</span></label>
                 <input type="password" name="password"
-                    class="form-control @error('password') is-invalid @enderror"
-                    autocomplete="new-password">
+                    class="form-control @error('password') is-invalid @enderror" autocomplete="new-password">
             </div>
 
-            {{-- Konfirmasi Password --}}
             <div class="mb-4">
                 <label class="form-label">Konfirmasi Password Baru</label>
                 <input type="password" name="password_confirmation" class="form-control">
             </div>
 
-            {{-- Tombol --}}
-            <div class="d-flex justify-content-between">
-                <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">← Batal</a>
-                <button type="submit" class="btn btn-primary px-4">Simpan</button>
+            <button type="submit" class="btn btn-custom w-100">Simpan Perubahan</button>
+
+            <div class="text-center mt-3">
+                <a href="{{ url()->previous() }}" class="text-decoration-none small">← Kembali</a>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 @endsection
+
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -116,7 +127,9 @@
             if (file && file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    previewImage.src = e.target.result;
+                    if (previewImage) {
+                        previewImage.src = e.target.result;
+                    }
                 };
                 reader.readAsDataURL(file);
             }
@@ -124,4 +137,3 @@
     });
 </script>
 @endpush
-

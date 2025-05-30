@@ -20,11 +20,6 @@
             <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="phone" class="form-label">Telepon:</label>
-            <input type="text" name="phone" class="form-control" value="{{ old('phone', $user->phone) }}">
-        </div>
-
         <button type="submit" class="btn btn-success">Simpan Perubahan</button>
         <a href="{{ route('admin.akun.index') }}" class="btn btn-secondary ms-2">Batal</a>
     </form>

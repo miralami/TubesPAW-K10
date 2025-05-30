@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Exports\AkunExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\{
     ProductController, AdminController, LandingPageController,
     CatalogController, CartController, CheckoutController, TransactionController,
     AuthController, DashboardController, AccountController, ReviewController,
+    UserTransactionController
 };
 
 // =======================
@@ -53,12 +56,10 @@ Route::middleware('auth')->group(function () {
     // Transactions
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
-
     // Reviews
     Route::post('/product/{product}/review', [ReviewController::class, 'store'])->name('reviews.store');
     Route::put('/review/{review}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/review/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-
 
     // Redirect regular users from dashboard
     Route::get('/dashboard', fn () => redirect()->route('landing.index'))->name('dashboard');
@@ -69,13 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('products/export', [ProductController::class, 'export'])
-            ->name('products.export');
-        Route::post('products/import', [ProductController::class, 'import'])
-            ->name('products.import');
+        Route::get('products/export', [ProductController::class, 'export'])->name('products.export');
+        Route::post('products/import', [ProductController::class, 'import'])->name('products.import');
         Route::resource('products', ProductController::class);
         Route::resource('transactions', TransactionController::class);
-
 
         Route::prefix('akun')->name('akun.')->controller(AccountController::class)->group(function () {
             Route::get('/', 'index')->name('index');
@@ -88,6 +86,5 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-use App\Http\Controllers\UserTransactionController;
-
+// Riwayat transaksi user
 Route::get('/riwayat-transaksi', [UserTransactionController::class, 'index'])->middleware('auth')->name('transactions.riwayat');

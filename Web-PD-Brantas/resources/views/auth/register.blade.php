@@ -1,70 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Registrasi</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-    <div class="container py-5">
-        <div class="w-50 mx-auto bg-white p-4 rounded shadow">
-            <h2 class="text-center mb-4">Form Registrasi</h2>
+@section('title', 'Register')
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+@push('styles')
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+<style>
+    body {
+        background-color: #0f2c59;
+        min-height: 100vh;
+    }
 
-            <form action="{{ url('/register') }}" method="POST">
-                @csrf
+    .auth-card {
+        max-width: 420px;
+        width: 100%;
+        backdrop-filter: blur(4px);
+        background-color: rgba(248, 250, 252, 0.85);
+        border-radius: 10px;
+    }
 
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nama</label>
-                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
-                </div>
+    .btn-custom-register {
+        background-color: #20B2AA;
+        color: white;
+        border: none;
+    }
 
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-                </div>
+    .btn-custom-register:hover {
+        background-color: #199e97;
+        color: white;
+    }
+</style>
+@endpush
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" required>
-                </div>
+@section('content')
+<div class="container d-flex align-items-center justify-content-center" style="min-height:80vh">
+    <div class="card shadow-lg auth-card p-4" data-aos="zoom-in">
+        <h3 class="text-center fw-bold mb-4">Register</h3>
 
-                <div class="mb-3">
-                    <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                    <input type="password" class="form-control" name="password_confirmation" required>
-                </div>
-
-                {!! NoCaptcha::renderJs() !!}
-                {!! NoCaptcha::display() !!}
-
-                @error('g-recaptcha-response')
-                    <div class="text-danger small mt-2">{{ $message }}</div>
-                @enderror
-
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Daftar</button>
-                </div>
-            </form>
-
-            <div class="text-center mt-3">
-                <p>Sudah punya akun? <a href="{{ route('login') }}">Login di sini</a></p>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0 small">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
+        @endif
+
+        <form action="{{ url('/register') }}" method="POST">
+            @csrf
+
+            <div class="mb-3">
+                <label class="form-label">Nama</label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                       name="name" value="{{ old('name') }}" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                       name="email" value="{{ old('email') }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                       name="password" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Konfirmasi Password</label>
+                <input type="password" class="form-control" name="password_confirmation" required>
+            </div>
+
+            {!! NoCaptcha::renderJs() !!}
+            {!! NoCaptcha::display() !!}
+
+            @error('g-recaptcha-response')
+                <div class="text-danger small mt-2">{{ $message }}</div>
+            @enderror
+
+            <button type="submit" class="btn btn-custom-register w-100">
+                Daftar
+            </button>
+        </form>
+
+        <div class="text-center small mt-3">
+            Sudah punya akun?
+            <a href="{{ route('login') }}" class="fw-semibold">Login di sini</a>
         </div>
     </div>
-
-    <!-- Optional: Bootstrap JS (jika butuh interaktivitas tambahan) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+@endsection
