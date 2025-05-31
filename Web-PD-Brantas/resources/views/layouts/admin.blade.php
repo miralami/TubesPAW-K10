@@ -12,7 +12,6 @@
     <style>
     body { overflow-x: hidden; }
 
-    /* sidebar wrapper */
     .sidebar {
         min-height: 100vh;
         background: #212529;
@@ -22,7 +21,6 @@
         padding: 0;
     }
 
-    /* brand / header */
     .sidebar-brand {
         font-size: 1.1rem;
         font-weight: 600;
@@ -35,7 +33,6 @@
     }
     .sidebar-brand i { font-size: 1.2rem; color: #0d6efd; }
 
-    /* nav links */
     .sidebar .nav-link {
         color: #d9d9d9;
         padding: .65rem 1.2rem;
@@ -45,19 +42,18 @@
         gap: .75rem;
         transition: background .2s, color .2s;
     }
-    /* full overlay on hover and active */
+
     .sidebar .nav-link:hover,
     .sidebar .nav-link.active {
         background: rgba(255,255,255,0.1);
         color: #fff;
     }
-    /* blue left accent for active */
+
     .sidebar .nav-link.active {
         border-left: 3px solid #0d6efd;
         font-weight: 600;
     }
 
-    /* profile section */
     .sidebar-profile {
         margin: 1rem;
         padding: .75rem;
@@ -157,5 +153,9 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Tambahkan stack script untuk JS tambahan -->
+@stack('scripts')
+
 </body>
 </html>

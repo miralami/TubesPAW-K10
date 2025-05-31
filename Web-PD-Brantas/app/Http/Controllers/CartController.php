@@ -17,7 +17,7 @@ class CartController extends Controller
 
         if (isset($cart[$productId])) {
             $newQty = $cart[$productId]['quantity'] + $qty;
-            $cart[$productId]['quantity'] = min($newQty, $product->stock); // Batasi ke stok
+            $cart[$productId]['quantity'] = min($newQty, $product->stock);
         } else {
             $cart[$productId] = [
                 'name' => $product->name,

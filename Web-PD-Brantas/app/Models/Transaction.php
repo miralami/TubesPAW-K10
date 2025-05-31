@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Product;
+use App\Models\TransactionItem;
+use App\Models\User;
 
 class Transaction extends Model
 {
@@ -12,14 +13,19 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id',
-        'product_id',
-        'quantity',
-        'total_price',
+        'total',
         'status',
     ];
 
-    public function product()
+    // Relasi ke user (opsional, jika kamu butuh)
+    public function user()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(User::class);
+    }
+
+    // Relasi ke semua item dalam transaksi ini
+    public function items()
+    {
+        return $this->hasMany(TransactionItem::class);
     }
 }

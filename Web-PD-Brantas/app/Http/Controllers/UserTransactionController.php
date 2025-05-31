@@ -10,7 +10,7 @@ class UserTransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with('product')
+        $transactions = Transaction::with('items.product')
             ->where('user_id', Auth::id())
             ->latest()
             ->get();
