@@ -58,25 +58,15 @@
     </div>
   </div>
 
-  {{-- Top 5 Produk Terlaris --}}
-  <div class="col-sm-6 col-lg-4">
+    {{-- Top 5 Produk Terlaris --}}
+    <div class="col-sm-6 col-lg-4">
     <div class="card shadow-sm border-0 h-100">
-      <div class="card-body">
+        <div class="card-body">
         <h6 class="mb-3">Top 5 Produk Terlaris</h6>
-        <ul class="list-unstyled mb-0">
-          @foreach($topProducts as $prod)
-            <li class="d-flex justify-content-between align-items-center py-1">
-              <span>{{ $loop->iteration }}. {{ Str::limit($prod->name, 25) }}</span>
-              <span class="badge bg-primary bg-opacity-10 text-primary">
-                {{ $prod->sold }}
-              </span>
-            </li>
-          @endforeach
-        </ul>
-      </div>
+        <canvas id="topProductsChart" style="height:200px"></canvas>
+        </div>
     </div>
-  </div>
-
+    </div>
 
     {{-- kartu-kartu lain: Total Produk, Pengguna, Pesanan Hari Ini --}}
     <div class="col-sm-6 col-lg-4">
@@ -139,4 +129,39 @@
         </div>
     </div>
 </div>
+<script>
+  // Ambil data dari PHP
+  const labels = @json($topProducts->pluck('name'));
+  const data   = @json($topProducts->pluck('sold'));
+
+  // Dapatkan context canvas
+  const ctx = document.getElementById('topProductsChart').getContext('2d');
+
+  new Chart(ctx, {
+    type: 'bar',            // bisa juga 'horizontalBar' dengan Chart.js v2
+    data: {
+      labels,
+      datasets: [{
+        label: 'Terjual',
+        data,
+        backgroundColor: 'rgba(13,110,253,0.6)',  // satu warna, bisa di-array kalau mau variasi
+        borderColor:   'rgba(13,110,253,1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      indexAxis: 'y',       // buat horizontal bar; kalau mau vertikal buang ini
+      scales: {
+        x: { beginAtZero: true }
+      },
+      plugins: {
+        legend: { display: false }  // sembunyikan legenda “Terjual”
+      },
+      layout: {
+        padding: { top: 10, right: 10, bottom: 10, left: 10 }
+      }
+    }
+  });
+</script>
+
 @endsection

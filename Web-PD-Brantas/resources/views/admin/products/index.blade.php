@@ -22,8 +22,7 @@
         <div>
             <h2 class="fw-semibold mb-1">Product</h2>
             <p class="text-muted mb-0" style="max-width:420px">
-                A pharmacy purchase refers to the act of buying medications, medical supplies,
-                and other healthcare-related products.
+                Laman ini berfungsi untuk memanage produk. Anda dapat menambah, mengedit, menghapus produk, serta mengimpor dan mengekspor data produk dalam format Excel.
             </p>
         </div>
 
@@ -43,7 +42,7 @@
                         </span>
                         <h4 class="fw-bold mb-0">{{ $totalProduct }}</h4>
                     </div>
-                    <small class="text-muted">Total Product</small>
+                    <small class="text-muted">Total Produk</small>
                     <div class="small text-success mt-1"><i class="fa fa-arrow-up"></i> +30 from last week</div>
                 </div>
             </div>
@@ -57,7 +56,7 @@
                         </span>
                         <h4 class="fw-bold mb-0">{{ $newProduct }}</h4>
                     </div>
-                    <small class="text-muted">New Product</small>
+                    <small class="text-muted">Produk Baru</small>
                     <div class="small text-success mt-1">+8 from last week</div>
                 </div>
             </div>
@@ -71,7 +70,7 @@
                         </span>
                         <h4 class="fw-bold mb-0">{{ $lowStock }}</h4>
                     </div>
-                    <small class="text-muted">Low Stock Item</small>
+                    <small class="text-muted">Produk Stok Rendah</small>
                     <div class="small text-success mt-1">+12 from last week</div>
                 </div>
             </div>
@@ -84,7 +83,7 @@
                             <i class="fa-solid fa-xmark text-danger"></i>
                         </span>
                     </div>
-                    <small class="text-muted">Out of Stock</small>
+                    <small class="text-muted">Stok Habis</small>
                     <div class="small text-danger mt-1">-08 from last week</div>
                 </div>
             </div>

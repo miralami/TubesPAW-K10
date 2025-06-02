@@ -166,6 +166,8 @@
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 <script>gsap.registerPlugin(ScrollTrigger);</script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>AOS.init({mirror:false,delay:50,offset:120});</script>
 
