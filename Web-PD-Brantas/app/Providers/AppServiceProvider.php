@@ -29,5 +29,8 @@ class AppServiceProvider extends ServiceProvider
         // Kalau Laravel <9 dan belum ada useBootstrapFive(),
         // Anda bisa publish vendor view:
         // php artisan vendor:publish --tag=laravel-pagination
+        if ($this->app->environment('production')) {
+            \URL::forceScheme('https');
+        }
     }
 }
