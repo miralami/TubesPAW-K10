@@ -1,71 +1,612 @@
+/* ================================
+   Variabel Warna Global
+   ================================ */
 :root {
-    --br-navy: #0d1a3f;  /* Your custom navy color */
-    --br-light: #f5f7fa; /* Light color for text */
+  --br-navy:        #0D1A3F;   /* Oxford Blue */
+  --br-light:       #F7F7FF;   /* Ghost White */
+  --br-accent:      #20B2AA;   /* Light Sea Green */
+  --br-accent-dark: #199E97;   /* Sea Green Gelap */
+  --br-alert:       #C03221;   /* Engineering Orange */
 }
 
-    body {
-        background-color: #00005b;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 304 304' width='304' height='304'%3E%3Cpath fill='%23f5f1fb' fill-opacity='0.4' d='M44.1 224a5 5 0 1 1 0 2H0v-2h44.1zm160 48a5 5 0 1 1 0 2H82v-2h122.1zm57.8-46a5 5 0 1 1 0-2H304v2h-42.1zm0 16a5 5 0 1 1 0-2H304v2h-42.1zm6.2-114a5 5 0 1 1 0 2h-86.2a5 5 0 1 1 0-2h86.2zm-256-48a5 5 0 1 1 0 2H0v-2h12.1zm185.8 34a5 5 0 1 1 0-2h86.2a5 5 0 1 1 0 2h-86.2zM258 12.1a5 5 0 1 1-2 0V0h2v12.1zm-64 208a5 5 0 1 1-2 0v-54.2a5 5 0 1 1 2 0v54.2zm48-198.2V80h62v2h-64V21.9a5 5 0 1 1 2 0zm16 16V64h46v2h-48V37.9a5 5 0 1 1 2 0zm-128 96V208h16v12.1a5 5 0 1 1-2 0V210h-16v-76.1a5 5 0 1 1 2 0zm-5.9-21.9a5 5 0 1 1 0 2H114v48H85.9a5 5 0 1 1 0-2H112v-48h12.1zm-6.2 130a5 5 0 1 1 0-2H176v-74.1a5 5 0 1 1 2 0V242h-60.1zm-16-64a5 5 0 1 1 0-2H114v48h10.1a5 5 0 1 1 0 2H112v-48h-10.1zM66 284.1a5 5 0 1 1-2 0V274H50v30h-2v-32h18v12.1zM236.1 176a5 5 0 1 1 0 2H226v94h48v32h-2v-30h-48v-98h12.1zm25.8-30a5 5 0 1 1 0-2H274v44.1a5 5 0 1 1-2 0V146h-10.1zm-64 96a5 5 0 1 1 0-2H208v-80h16v-14h-42.1a5 5 0 1 1 0-2H226v18h-16v80h-12.1zm86.2-210a5 5 0 1 1 0 2H272V0h2v32h10.1zM98 101.9V146H53.9a5 5 0 1 1 0-2H96v-42.1a5 5 0 1 1 2 0zM53.9 34a5 5 0 1 1 0-2H80V0h2v34H53.9zm60.1 3.9V66H82v64H69.9a5 5 0 1 1 0-2H80V64h32V37.9a5 5 0 1 1 2 0zM101.9 82a5 5 0 1 1 0-2H128V37.9a5 5 0 1 1 2 0V82h-28.1zm16-64a5 5 0 1 1 0-2H146v44.1a5 5 0 1 1-2 0V18h-26.1zm102.2 270a5 5 0 1 1 0 2H98v14h-2v-16h124.1zM242 149.9V160h16v34h-16v62h48v48h-2v-46h-48v-66h16v-30h-16v-12.1a5 5 0 1 1 2 0zM53.9 18a5 5 0 1 1 0-2H64V2H48V0h18v18H53.9zm112 32a5 5 0 1 1 0-2H192V0h50v2h-48v48h-28.1zm-48-48a5 5 0 0 1-9.8-2h2.07a3 3 0 1 0 5.66 0H178v34h-18V21.9a5 5 0 1 1 2 0V32h14V2h-58.1zm0 96a5 5 0 1 1 0-2H137l32-32h39V21.9a5 5 0 1 1 2 0V66h-40.17l-32 32H117.9zm28.1 90.1a5 5 0 1 1-2 0v-76.51L175.59 80H224V21.9a5 5 0 1 1 2 0V82h-49.59L146 112.41v75.69zm16 32a5 5 0 1 1-2 0v-99.51L184.59 96H300.1a5 5 0 0 1 3.9-3.9v2.07a3 3 0 0 0 0 5.66v2.07a5 5 0 0 1-3.9-3.9H185.41L162 121.41v98.69zm-144-64a5 5 0 1 1-2 0v-3.51l48-48V48h32V0h2v50H66v55.41l-48 48v2.69zM50 53.9v43.51l-48 48V208h26.1a5 5 0 1 1 0 2H0v-65.41l48-48V53.9a5 5 0 1 1 2 0zm-16 16V89.41l-34 34v-2.82l32-32V69.9a5 5 0 1 1 2 0zM12.1 32a5 5 0 1 1 0 2H9.41L0 43.41V40.6L8.59 32h3.51zm265.8 18a5 5 0 1 1 0-2h18.69l7.41-7.41v2.82L297.41 50H277.9zm-16 160a5 5 0 1 1 0-2H288v-71.41l16-16v2.82l-14 14V210h-28.1zm-208 32a5 5 0 1 1 0-2H64v-22.59L40.59 194H21.9a5 5 0 1 1 0-2H41.41L66 216.59V242H53.9zm150.2 14a5 5 0 1 1 0 2H96v-56.6L56.6 162H37.9a5 5 0 1 1 0-2h19.5L98 200.6V256h106.1zm-150.2 2a5 5 0 1 1 0-2H80v-46.59L48.59 178H21.9a5 5 0 1 1 0-2H49.41L82 208.59V258H53.9zM34 39.8v1.61L9.41 66H0v-2h8.59L32 40.59V0h2v39.8zM2 300.1a5 5 0 0 1 3.9 3.9H3.83A3 3 0 0 0 0 302.17V256h18v48h-2v-46H2v42.1zM34 241v63h-2v-62H0v-2h34v1zM17 18H0v-2h16V0h2v18h-1zm273-2h14v2h-16V0h2v16zm-32 273v15h-2v-14h-14v14h-2v-16h18v1zM0 92.1A5.02 5.02 0 0 1 6 97a5 5 0 0 1-6 4.9v-2.07a3 3 0 1 0 0-5.66V92.1zM80 272h2v32h-2v-32zm37.9 32h-2.07a3 3 0 0 0-5.66 0h-2.07a5 5 0 0 1 9.8 0zM5.9 0A5.02 5.02 0 0 1 0 5.9V3.83A3 3 0 0 0 3.83 0H5.9zm294.2 0h2.07A3 3 0 0 0 304 3.83V5.9a5 5 0 0 1-3.9-5.9zm3.9 300.1v2.07a3 3 0 0 0-1.83 1.83h-2.07a5 5 0 0 1 3.9-3.9zM97 100a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-48 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 96a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-144a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-96 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm96 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-32 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM49 36a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-32 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM33 68a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 240a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm80-176a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 48a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm112 176a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-16 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM17 180a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-32a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM17 84a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm32 64a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16-16a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'%3E%3C/path%3E%3C/svg%3E");
-    }
+/* ================================
+   Reset Dasar dan Struktur Utama
+   ================================ */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--br-light);
+}
 
-/* Target the navbar container */
+main {
+  background-color: var(--br-light);
+  color: var(--br-navy);
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+/* ================================
+   Animasi Global
+   ================================ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ================================
+   Hero Section
+   ================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(13, 26, 63, 0.65), rgba(13, 26, 63, 0.65)),
+    url('/images/toko.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--br-light);
+}
+
+.hero .hero-content {
+  max-width: 720px;
+  margin: 0 auto;
+  animation: fadeInDown 1s ease forwards;
+}
+
+.hero .btn-outline-light {
+  border: 2px solid var(--br-light);
+  color: var(--br-light);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.hero .btn-outline-light:hover {
+  background: var(--br-light);
+  color: var(--br-navy);
+}
+
+.hero .btn-accent {
+  background: var(--br-accent);
+  color: var(--br-light);
+  border: 2px solid var(--br-accent);
+  transition: background 0.2s ease;
+}
+
+.hero .btn-accent:hover {
+  background: var(--br-accent-dark);
+}
+
+/* ==== Hero Glass Card ==== */
+.hero-wrap {
+  background: #0d0d15;
+  padding-top: 120px;   /* jarak dari navbar */
+  padding-bottom: 80px;
+}
+
+.hero-card {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  padding: 80px 40px;
+  color: var(--br-light);
+  text-align: center;
+  backdrop-filter: blur(6px);
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    800px 600px at 80% 20%,
+    rgba(75, 132, 255, 0.55),
+    rgba(0, 0, 0, 0.4)
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* ================================
+   About Section
+   ================================ */
+.about-section {
+  background: var(--br-light);
+  padding: 5rem 0;
+}
+
+.about-section h2 {
+  color: var(--br-navy);
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.about-section p {
+  color: var(--br-navy);
+  font-size: 1rem;
+}
+
+.about-section .highlight-year {
+  display: inline-block;
+  font-size: 2rem;
+  color: var(--br-alert);
+  background: rgba(220, 53, 69, 0.1); /* senada var(--br-alert) */
+  padding: 4px 12px;
+  border-radius: 6px;
+  animation: zoomIn 0.6s ease 0.5s forwards;
+  opacity: 0;
+}
+
+@media (min-width: 768px) {
+  .about-section .highlight-year {
+    margin: 1rem 0;
+  }
+}
+
+/* ================================
+   Icon‐feature Cards
+   ================================ */
+.feature-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.feature-card i {
+  font-size: 2rem;
+  color: var(--br-accent);
+  margin-bottom: 0.75rem;
+}
+
+/* ================================
+   Featured Products Section
+   ================================ */
+.featured-section {
+  padding: 5rem 0;
+}
+
+.featured-section h2 {
+  color: var(--br-navy);
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Kartu produk (Fancybox Card) */
+.fancy-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+}
+
+.fancy-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.fancy-card .ratio {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  overflow: hidden;
+}
+
+.fancy-card img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.fancy-card .card-body {
+  text-align: center;
+}
+
+.fancy-card .card-title {
+  font-weight: 600;
+  color: var(--br-navy);
+}
+
+.fancy-card .text-muted {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.fancy-card .text-primary,
+.fancy-card .fw-bold {
+  color: var(--br-accent);
+}
+
+/* ================================
+   Sidebar (Search & Filter)
+   ================================ */
+.card-filter {
+  border-radius: 12px;
+  background-color: var(--br-light);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   Kartu Produk (List/Grid)
+   ================================ */
+.card-product {
+  border-radius: 10px;
+  background-color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.img-card {
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+@media (max-width: 992px) {
+  .img-card {
+    height: 160px;
+  }
+}
+
+@media (max-width: 576px) {
+  .img-card {
+    height: 140px;
+  }
+}
+
+/* ================================
+   Badge Kategori
+   ================================ */
+.badge-cat {
+  background-color: var(--br-accent);
+  color: var(--br-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ================================
+   Tombol Khusus
+   ================================ */
+.btn-outline-accent {
+  color: var(--br-accent);
+  border: 2px solid var(--br-accent);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline-accent:hover {
+  background: var(--br-accent);
+  color: var(--br-light);
+}
+
+/* ================================
+   Navbar (diperbarui)
+   ================================ */
 #nav {
-    background-color: var(--br-navy);
-    color: var(--br-light);
-    padding: 10px;
-    font-size: 16px;
-    font-family: 'Arial', sans-serif;
+  background-color: var(--br-navy) !important;
+  color: var(--br-light);
+  padding: 10px;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  transition: background-color 0.3s ease;
 }
 
-.navbar-nav .nav-link {
-    font-size: 1rem;
-    letter-spacing: 0.4px;
-    transition: color 0.2s ease, border-bottom 0.2s ease;
+body.scrolled #nav {
+  background-color: rgba(13, 26, 63, 0.65) !important;
 }
 
-.navbar-nav .nav-link:hover {
-    color: #f8f9fa;
+#nav .navbar-brand {
+  color: var(--br-light) !important;
 }
 
-.navbar-nav .nav-link.active {
-    border-bottom: 2px solid #fff;
-    padding-bottom: 2px;
+#nav .navbar-nav {
+  gap: 2rem;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
+#nav .nav-link {
+  font-size: 1rem;
+  letter-spacing: 0.4px;
+  transition: color 0.2s ease, border-bottom 0.2s ease;
+  color: var(--br-light) !important;
 }
 
-.txt-white {
-    color: #fff;
+#nav .nav-link:hover {
+  color: #F8F9FA !important;
 }
 
-.card-profile{
-    border:1px solid #dee2e6;      /* abu muda */
-    box-shadow:0 0.5rem 1rem rgba(0,0,0,.08);
-    background:#f8fafc;
+#nav .nav-link.active {
+  color: var(--br-light) !important;
+  border-bottom: 2px solid #FFFFFF;
+  padding-bottom: 2px;
 }
 
-.font-size-40{
-    font-size:40px;
+/* ================================
+   Gaya untuk Foto Profil
+   ================================ */
+.profile-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
+.profile-placeholder {
+  width: 40px;
+  height: 40px;
+  background-color: #CCC;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* ================================
+   Card Profile
+   ================================ */
+.card-profile {
+  border: 1px solid #DEE2E6;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+  background: #F8FAFC;
+}
+
+/* ================================
+   Font Size Utility
+   ================================ */
+.font-size-40 {
+  font-size: 40px;
+}
+
+/* ================================
+   Auth Card
+   ================================ */
 .auth-card {
-    max-width: 420px;
-    width: 100%;
-    backdrop-filter: blur(4px);
-    background-color: rgba(248, 250, 252, 0.85); /* transparansi agar gambar terlihat */
-    border-radius: 10px;
+  max-width: 420px;
+  width: 100%;
+  backdrop-filter: blur(4px);
+  background-color: rgba(248, 250, 252, 0.85);
+  border-radius: 10px;
 }
 
+/* ================================
+   Tombol Login Kustom
+   ================================ */
 .btn-custom-login {
-    background-color: #20B2AA; /* Warna mirip tombol Get Started */
-    color: white;
-    border: none;
+  background-color: var(--br-accent);
+  color: #FFFFFF;
+  border: none;
+  transition: background-color 0.2s ease;
 }
 
 .btn-custom-login:hover {
-    background-color: #199e97; /* Efek hover */
-    color: white;
+  background-color: var(--br-accent-dark);
+  color: #FFFFFF;
+}
+
+/* ================================
+   Badge Alert atau Peringatan
+   ================================ */
+.badge-alert {
+  background-color: var(--br-alert);
+  color: var(--br-light);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+/* ================================
+   Snackbar
+   ================================ */
+.snackbar {
+  visibility: hidden;
+  min-width: 260px;
+  max-width: 90%;
+  text-align: center;
+  border-radius: 8px;
+  padding: 14px 20px;
+  position: fixed;
+  left: 50%;
+  top: 30px;
+  transform: translateX(-50%);
+  z-index: 9999;
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease, top 0.4s ease;
+  border: 2px solid transparent;
+}
+
+.snackbar.show {
+  visibility: visible;
+  opacity: 1;
+  top: 50px;
+}
+
+.snackbar-success {
+  background-color: #E6F7EC;
+  color: #228C4F;
+  border-color: #A3E4C1;
+}
+
+.snackbar-error {
+  background-color: #FDECEA;
+  color: #D93025;
+  border-color: #F5C2BE;
+}
+
+/* ================================
+   Sidebar Utama
+   ================================ */
+.sidebar {
+  background: var(--br-navy);
+  min-height: 100vh;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.sidebar-brand {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  color: #fff;
+  padding: 1rem 1.2rem .5rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.sidebar-brand i {
+  font-size: 1.2rem;
+  color: #0d6efd;
+}
+
+.sidebar .nav-link {
+  color: var(--br-light);
+  padding: .65rem 1.2rem;
+  font-size: .925rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  transition: background .2s, color .2s;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.sidebar .nav-link.active {
+  border-left: 3px solid #0d6efd;
+  font-weight: 600;
+}
+
+.sidebar-profile {
+  margin: 1rem;
+  padding: .75rem;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+  border-radius: .5rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.sidebar-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: blur(0.5px);
+}
+
+.sidebar-profile .profile-info .name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.sidebar-profile .profile-info .role {
+  font-size: .85rem;
+  color: #d9d9d9;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 1rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* ================================
+   Footer
+   ================================ */
+footer {
+  width: 100%;
+  background-color: var(--br-navy);
+  color: var(--br-light);
+  padding: 1.5rem 0;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ================================
+   Utility Classes
+   ================================ */
+.text-dark-custom {
+  color: var(--br-navy) !important;
+}
+
+.img-product {
+  max-height: 420px;
+  object-fit: contain;
+}
+
+.input-qty {
+  max-width: 200px;
+}
+
+/* ================================
+   FAQ Section
+   ================================ */
+.faq-card {
+  border-radius: 14px;
+}
+
+.accordion-button:not(.collapsed) {
+  background: var(--br-light) !important;
+  color: var(--br-navy) !important;
 }

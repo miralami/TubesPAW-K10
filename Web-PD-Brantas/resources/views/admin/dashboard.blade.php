@@ -7,8 +7,9 @@
     <h2 class="fw-bold mb-1">Selamat Datang, Admin!</h2>
     <p class="text-muted mb-4">Kelola produk, pengguna & pesanan melalui panel di bawah.</p>
 
-    {{-- Stat cards --}}
+    {{-- Stat cards + gabungan Total Terjual & Top 5 Produk Terlaris --}}
     <div class="row g-4 mb-4">
+        {{-- Total Produk --}}
         <div class="col-sm-6 col-lg-4">
             <div class="card shadow-sm border-0">
                 <div class="card-body d-flex align-items-center gap-3">
@@ -21,6 +22,7 @@
             </div>
         </div>
 
+        {{-- Pengguna Terdaftar --}}
         <div class="col-sm-6 col-lg-4">
             <div class="card shadow-sm border-0">
                 <div class="card-body d-flex align-items-center gap-3">
@@ -33,54 +35,43 @@
             </div>
         </div>
 
+        {{-- Pesanan Hari Ini --}}
         <div class="col-sm-6 col-lg-4">
             <div class="card shadow-sm border-0">
                 <div class="card-body d-flex align-items-center gap-3">
                     <span class="badge bg-warning p-3"><i class="bi bi-receipt fs-5"></i></span>
                     <div>
                         <h6 class="mb-0">Pesanan Hari Ini</h6>
+                        <h4 class="fw-bold mb-0">{{ $todayOrders }}</h4>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-{{-- Total Terjual --}}
-  <div class="col-sm-6 col-lg-4">
-    <div class="card shadow-sm border-0">
-      <div class="card-body d-flex align-items-center gap-3">
-        <span class="badge bg-info p-3"><i class="bi bi-bar-chart fs-5"></i></span>
-        <div>
-          <h6 class="mb-0">Total Terjual</h6>
-          <h4 class="fw-bold mb-0">{{ $soldCount }}</h4>
+        {{-- Gabungan Total Terjual + Top 5 Produk Terlaris (menyatu) --}}
+        <div class="col-sm-6 col-lg-8">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    {{-- Bagian atas: Total Terjual --}}
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <span class="badge bg-info p-3"><i class="bi bi-bar-chart fs-5"></i></span>
+                        <div>
+                            <h6 class="mb-0">Total Terjual</h6>
+                            <h4 class="fw-bold mb-0">{{ $soldCount }}</h4>
+                        </div>
+                    </div>
+
+                    {{-- Separator --}}
+                    <hr>
+
+                    {{-- Bagian bawah: Top 5 Produk Terlaris --}}
+                    <h6 class="mt-3 mb-3">Top 5 Produk Terlaris</h6>
+                    <canvas id="topProductsChart" style="height:250px;"></canvas>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-
-    {{-- Top 5 Produk Terlaris --}}
-    <div class="col-sm-6 col-lg-4">
-    <div class="card shadow-sm border-0 h-100">
-        <div class="card-body">
-        <h6 class="mb-3">Top 5 Produk Terlaris</h6>
-        <canvas id="topProductsChart" style="height:200px"></canvas>
-        </div>
-    </div>
-    </div>
-
-    {{-- kartu-kartu lain: Total Produk, Pengguna, Pesanan Hari Ini --}}
-    <div class="col-sm-6 col-lg-4">
-        {{-- ...Total Produk... --}}
-    </div>
-    <div class="col-sm-6 col-lg-4">
-        {{-- ...Pengguna Terdaftar... --}}
-    </div>
-    <div class="col-sm-6 col-lg-4">
-        {{-- ...Pesanan Hari Ini... --}}
-    </div>
-</div>
-
-    {{-- Weather widget (lokasi user) sudah ditampilkan di atas otomatis --}}
+    {{-- /.row --}}
 
     {{-- Quick-links  --}}
     <div class="row g-3">
@@ -129,39 +120,48 @@
         </div>
     </div>
 </div>
+
+{{-- Load Chart.js dan inisiasi Chart setelah elemen canvas ter-render --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  // Ambil data dari PHP
-  const labels = @json($topProducts->pluck('name'));
-  const data   = @json($topProducts->pluck('sold'));
+  document.addEventListener('DOMContentLoaded', function() {
+    // Ambil data dari PHP
+    const labels = @json($topProducts->pluck('name'));
+    const data   = @json($topProducts->pluck('sold'));
 
-  // Dapatkan context canvas
-  const ctx = document.getElementById('topProductsChart').getContext('2d');
-
-  new Chart(ctx, {
-    type: 'bar',            // bisa juga 'horizontalBar' dengan Chart.js v2
-    data: {
-      labels,
-      datasets: [{
-        label: 'Terjual',
-        data,
-        backgroundColor: 'rgba(13,110,253,0.6)',  // satu warna, bisa di-array kalau mau variasi
-        borderColor:   'rgba(13,110,253,1)',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      indexAxis: 'y',       // buat horizontal bar; kalau mau vertikal buang ini
-      scales: {
-        x: { beginAtZero: true }
-      },
-      plugins: {
-        legend: { display: false }  // sembunyikan legenda “Terjual”
-      },
-      layout: {
-        padding: { top: 10, right: 10, bottom: 10, left: 10 }
-      }
+    // Jika tidak ada data, hentikan
+    if (labels.length === 0) {
+      return;
     }
+
+    // Dapatkan context canvas
+    const ctx = document.getElementById('topProductsChart').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Terjual',
+          data,
+          backgroundColor: 'rgba(13,110,253,0.6)',
+          borderColor:   'rgba(13,110,253,1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        indexAxis: 'y',  // horizontal bar. Hapus kalau ingin vertikal
+        scales: {
+          x: { beginAtZero: true }
+        },
+        plugins: {
+          legend: { display: false }
+        },
+        layout: {
+          padding: { top: 10, right: 10, bottom: 10, left: 10 }
+        }
+      }
+    });
   });
 </script>
-
 @endsection
