@@ -17,26 +17,48 @@
                         $subtotal = $item['price'] * $item['quantity'];
                         $maxQty = $products[$id]->stock ?? 1;
                     @endphp
+
+                    {{-- Kartu setiap item di keranjang --}}
                     <div class="d-flex mb-4 p-3 bg-white rounded shadow-sm align-items-center justify-content-between">
                         <div class="d-flex gap-3 align-items-center">
                             <img src="{{ asset('storage/'.$item['image']) }}" width="80" class="rounded border" alt="{{ $item['name'] }}">
                             <div>
                                 <h5 class="mb-1">{{ $item['name'] }}</h5>
-                                <div class="text-muted small">Harga: Rp{{ number_format($item['price'], 0, ',', '.') }}</div>
+                                <div class="text-muted small">
+                                    Harga: Rp{{ number_format($item['price'], 0, ',', '.') }}
+                                </div>
                             </div>
                         </div>
 
                         <div class="d-flex align-items-center gap-3">
-                            <input type="number" name="quantities[{{ $id }}]" value="{{ $item['quantity'] }}" min="1" max="{{ $maxQty }}" class="form-control text-center" style="width: 80px;">
-                            <div class="fw-semibold text-end">Rp{{ number_format($subtotal, 0, ',', '.') }}</div>
-                            <button type="submit" form="remove-form-{{ $id }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin ingin menghapus item ini?')">
+                            {{-- Input jumlah: pakai w-25 agar lebarnya konsisten --}}
+                            <input type="number"
+                                   name="quantities[{{ $id }}]"
+                                   value="{{ $item['quantity'] }}"
+                                   min="1"
+                                   max="{{ $maxQty }}"
+                                   class="form-control text-center w-25">
+
+                            {{-- Subtotal --}}
+                            <div class="fw-semibold text-end">
+                                Rp{{ number_format($subtotal, 0, ',', '.') }}
+                            </div>
+
+                            {{-- Tombol hapus (pakai form terpisah) --}}
+                            <button type="submit"
+                                    form="remove-form-{{ $id }}"
+                                    class="btn btn-outline-danger btn-sm"
+                                    onclick="return confirm('Yakin ingin menghapus item ini?')">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </div>
                     </div>
                 @endforeach
 
-                <button class="btn btn-outline-primary mt-3">Update Quantity</button>
+                {{-- Tombol Update Quantity --}}
+                <button type="submit" class="btn btn-custom-login mt-3">
+                    Update Quantity
+                </button>
             </div>
 
             <!-- Order Summary -->
@@ -44,7 +66,11 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="mb-3">Order Summary</h5>
-                        @php $total = collect(session('cart'))->sum(fn($i) => $i['price'] * $i['quantity']); @endphp
+
+                        @php
+                          $total = collect(session('cart'))
+                                      ->sum(fn($i) => $i['price'] * $i['quantity']);
+                        @endphp
 
                         <div class="d-flex justify-content-between mb-2">
                             <span>Subtotal:</span>
@@ -52,15 +78,24 @@
                         </div>
 
                         <hr>
+
                         <div class="d-flex justify-content-between mb-3 fs-5">
                             <strong>Total:</strong>
-                            <strong class="text-primary">Rp{{ number_format($total, 0, ',', '.') }}</strong>
+                            <strong class="text-primary">
+                                Rp{{ number_format($total, 0, ',', '.') }}
+                            </strong>
                         </div>
 
-                        <a href="{{ route('checkout') }}" class="btn btn-dark w-100">Checkout</a>
+                        {{-- Tombol Checkout --}}
+                        <a href="{{ route('checkout') }}" class="btn btn-custom-login w-100 mb-3">
+                            Checkout
+                        </a>
 
-                        <div class="mt-3 text-center">
-                            <a href="{{ route('catalog.index') }}" class="text-decoration-underline text-muted small">Continue Shopping</a>
+                        <div class="text-center">
+                            <a href="{{ route('catalog.index') }}"
+                               class="text-decoration-underline text-muted small">
+                                Continue Shopping
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -68,6 +103,7 @@
         </div>
     </form>
 
+    {{-- Form tersembunyi untuk menghapus setiap item --}}
     @foreach(session('cart') as $id => $item)
         <form id="remove-form-{{ $id }}" action="{{ route('cart.remove', $id) }}" method="POST" style="display: none;">
             @csrf
@@ -78,7 +114,9 @@
     @else
         <p class="text-center text-muted">Your cart is empty.</p>
         <div class="text-center mt-3">
-            <a href="{{ route('catalog.index') }}" class="btn btn-primary">Back to Catalog</a>
+            <a href="{{ route('catalog.index') }}" class="btn btn-custom-login">
+                Back to Catalog
+            </a>
         </div>
     @endif
 </div>

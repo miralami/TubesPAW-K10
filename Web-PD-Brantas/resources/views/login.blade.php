@@ -4,34 +4,8 @@
 
 @push('styles')
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-<style>
-    body {
-        background-image: url('/images/bg.jpg'); /* Ganti dengan path gambar kamu */
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        min-height: 100vh;
-    }
+<link href="styles.css" />
 
-    .auth-card {
-        max-width: 420px;
-        width: 100%;
-        backdrop-filter: blur(4px);
-        background-color: rgba(248, 250, 252, 0.85); /* transparansi agar gambar terlihat */
-        border-radius: 10px;
-    }
-
-    .btn-custom-login {
-        background-color: #20B2AA; /* Warna mirip tombol Get Started */
-        color: white;
-        border: none;
-    }
-
-    .btn-custom-login:hover {
-        background-color: #199e97; /* Efek hover */
-        color: white;
-    }
-</style>
 @endpush
 
 @section('content')
