@@ -48,7 +48,6 @@
                             </td>
                             <td class="align-middle">
                                 <div class="d-flex gap-1">
-                                    <a href="{{ route('admin.transactions.show', $t->id) }}" class="btn btn-sm btn-outline-info">Lihat</a>
                                     <a href="{{ route('admin.transactions.edit', $t->id) }}" class="btn btn-sm btn-outline-warning">Edit</a>
                                     <form action="{{ route('admin.transactions.destroy', $t->id) }}" method="POST" onsubmit="return confirm('Yakin hapus?')">
                                         @csrf @method('DELETE')
