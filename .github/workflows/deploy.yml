@@ -1,0 +1,36 @@
+name: Deploy to Azure VMs
+
+on:
+  push:
+    branches: [ main ] # Otomatis jalan kalau kamu atau temanmu push ke branch main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Deploy to VM 1 (Web Server 1)
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.VM_IP_1 }}
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd ~/TubesPAW-K10/Web-PD-Brantas
+          git pull origin main
+          sudo php artisan config:clear
+          sudo php artisan cache:clear
+
+    - name: Deploy to VM 2 (Web Server 2)
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.VM_IP_2 }}
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd ~/TubesPAW-K10/Web-PD-Brantas
+          git pull origin main
+          sudo php artisan config:clear
+          sudo php artisan cache:clear
