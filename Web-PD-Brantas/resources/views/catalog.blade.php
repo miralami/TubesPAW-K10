@@ -48,7 +48,7 @@
                         </span>
 
                         {{-- Gambar Produk --}}
-                        <img src="{{ asset('/storage' . $product->image) }}"
+                        <img src="{{ $product->image_url }}"
                              class="img-card"
                              alt="{{ $product->name }}">
 
