@@ -24,6 +24,11 @@
                 Lihat Katalog
             </a>
         </div>
+        @if($serverName)
+            <div class="server-badge mt-4">
+                Server: {{ $serverName }}
+            </div>
+        @endif
     </div>
 </section>
 
