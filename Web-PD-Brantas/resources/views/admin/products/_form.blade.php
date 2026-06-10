@@ -60,7 +60,7 @@
                class="form-control"
                accept="image/*">
         @if($isEdit && $product->image)
-          <img src="{{ asset('storage/' . $product->image) }}"
+          <img src="{{ $product->image_url }}"
                alt=""
                class="mt-2"
                width="100">

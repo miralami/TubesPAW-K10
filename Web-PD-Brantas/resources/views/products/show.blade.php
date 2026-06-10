@@ -18,7 +18,7 @@
             <!-- Gambar Produk -->
             <div class="col-lg-5 text-center fade-in">
                 <div class="border rounded shadow-sm p-2 bg-white">
-                    <img src="{{ asset('storage/' . $product->image) }}"
+                    <img src="{{ $product->image_url }}"
                          alt="{{ $product->name }}"
                          class="img-fluid img-product">
                 </div>

@@ -163,7 +163,7 @@
                         <td>{{ $p->category }}</td>
                         <td>
                         @if($p->image)
-                            <img src="{{ asset('storage/'.$p->image) }}"
+                            <img src="{{ $p->image_url }}"
                                 alt="img"
                                 width="60"
                                 class="rounded">

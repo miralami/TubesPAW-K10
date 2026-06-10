@@ -82,7 +82,7 @@
                     <div class="card fancy-card h-100" data-aos="zoom-in-up" data-aos-delay="{{ $loop->index * 80 }}">
                         {{-- Container untuk membuat rasio 1:1 --}}
                         <div class="ratio ratio-1x1">
-                            <img src="{{ asset($product->image) }}"
+                            <img src="{{ $product->image_url }}"
                                  alt="{{ $product->name }}"
                                  class="rounded-top object-fit-cover">
                         </div>
