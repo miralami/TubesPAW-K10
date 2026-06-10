@@ -4,6 +4,8 @@ return [
 
     // ... (pengaturan lainnya)
 
+    'server_name' => env('APP_SERVER_NAME'),
+
     'previous_keys' => [
         ...array_filter(
             explode(',', env('APP_PREVIOUS_KEYS', ''))
